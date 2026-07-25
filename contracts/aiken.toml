@@ -1,0 +1,19 @@
+name = "stellarvault/escrow"
+version = "0.1.0"
+compiler = "v1.1.9"
+plutus = "v3"
+license = "MIT"
+description = "StellarVault milestone escrow validator for Cardano"
+
+[repository]
+user = "OWNER"
+project = "REPO"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "v2.2.0"
+source = "github"
+
+[config.default]
+network_id = 0
