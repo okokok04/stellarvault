@@ -15,7 +15,7 @@ You'll also need a free [Blockfrost](https://blockfrost.io) account with a
 ## 1. Clone and install
 
 ```sh
-git clone https://github.com/<your-github-username>/stellarvault.git
+git clone https://github.com/okokok04/stellarvault.git
 cd stellarvault
 ```
 

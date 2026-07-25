@@ -2,8 +2,8 @@
 
 > Trustless milestone escrow for freelance & remote work, built on Cardano.
 
-[![CI](https://github.com/<your-github-username>/stellarvault/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-github-username>/stellarvault/actions/workflows/ci.yml)
-[![Deploy frontend](https://github.com/<your-github-username>/stellarvault/actions/workflows/deploy-frontend.yml/badge.svg)](https://github.com/<your-github-username>/stellarvault/actions/workflows/deploy-frontend.yml)
+[![CI](https://github.com/okokok04/stellarvault/actions/workflows/ci.yml/badge.svg)](https://github.com/okokok04/stellarvault/actions/workflows/ci.yml)
+[![Deploy frontend](https://github.com/okokok04/stellarvault/actions/workflows/deploy-frontend.yml/badge.svg)](https://github.com/okokok04/stellarvault/actions/workflows/deploy-frontend.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Network](https://img.shields.io/badge/network-Cardano%20Preprod-blue)](docs/SETUP.md)
 
@@ -76,7 +76,7 @@ demo/        Demo video script and X profile launch copy
 ## Quick start
 
 ```sh
-git clone https://github.com/<your-github-username>/stellarvault.git
+git clone https://github.com/okokok04/stellarvault.git
 cd stellarvault
 
 cd contracts && aiken check && aiken build && cd ..
