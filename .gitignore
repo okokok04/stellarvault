@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+frontend/dist/
+backend/dist/
+contracts/build/
+contracts/plutus.json
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+**/.env
+!.env.example
+!**/.env.example
+*.pem
+*.skey
+wallet.json
+seed.txt
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Aiken
+contracts/.aiken/
