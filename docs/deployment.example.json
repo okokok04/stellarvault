@@ -1,0 +1,8 @@
+{
+  "network": "Preprod",
+  "scriptAddress": "addr_test1w...REPLACE-WITH-REAL-SCRIPT-ADDRESS",
+  "walletAddress": "addr_test1q...REPLACE-WITH-DEPLOYER-WALLET-ADDRESS",
+  "validatorTitle": "escrow.escrow.spend",
+  "bootstrapTxHash": "REPLACE-WITH-REAL-TX-HASH",
+  "deployedAt": "2026-01-01T00:00:00.000Z"
+}
