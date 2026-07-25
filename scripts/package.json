@@ -1,0 +1,19 @@
+{
+  "name": "@stellarvault/scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy:preprod": "tsx deploy-preprod.ts",
+    "deploy:preprod:verify": "tsx deploy-preprod.ts --verify"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "lucid-cardano": "^0.10.11"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
