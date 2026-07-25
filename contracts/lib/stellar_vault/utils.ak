@@ -6,6 +6,7 @@
 /// entirely in these three checks, not scattered across the validator body.
 
 use aiken/collection/list
+use aiken/interval.{Finite}
 use cardano/address.{VerificationKeyCredential}
 use cardano/assets.{lovelace_of}
 use cardano/transaction.{Output, Transaction}
@@ -36,7 +37,7 @@ pub fn paid_at_least(outputs: List<Output>, key: ByteArray, amount: Int) -> Bool
 /// safe on-chain proxy for "the deadline has passed".
 pub fn deadline_passed(transaction: Transaction, deadline: Int) -> Bool {
   when transaction.validity_range.lower_bound.bound_type is {
-    cardano/transaction.Finite(lower) -> lower >= deadline
+    Finite(lower) -> lower >= deadline
     _ -> False
   }
 }
