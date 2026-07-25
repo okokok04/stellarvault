@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    name: Contracts (Aiken)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Aiken
+        uses: aiken-lang/setup-aiken@v1
+        with:
+          version: v1.1.9
+
+      - name: Check formatting
+        run: aiken fmt --check
+
+      - name: Type-check and run unit tests
+        run: aiken check
+
+      - name: Build (emit plutus.json blueprint)
+        run: aiken build
+
+      - name: Upload compiled blueprint
+        uses: actions/upload-artifact@v4
+        with:
+          name: plutus-blueprint
+          path: contracts/plutus.json
+          if-no-files-found: error
+
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Run unit + integration tests
+        run: npm test
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run component tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
