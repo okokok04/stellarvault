@@ -1,6 +1,7 @@
 import request from "supertest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createApp } from "../src/app.js";
+import { createFeedbackMemoryStore } from "../src/lib/feedbackStore.js";
 import { createMemoryStore } from "../src/lib/store.js";
 import type { OnChainPort } from "../src/routes/escrow.js";
 
@@ -15,7 +16,8 @@ function buildAppWithFakeOnchain() {
     resolveFunds: vi.fn().mockResolvedValue("fake-resolve-tx"),
   };
   const store = createMemoryStore();
-  const app = createApp({ store, onchain });
+  const feedbackStore = createFeedbackMemoryStore();
+  const app = createApp({ store, onchain, feedbackStore });
   return { app, onchain, store };
 }
 
