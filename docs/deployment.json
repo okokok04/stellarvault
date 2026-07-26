@@ -10,5 +10,16 @@
     "lockTxHash": "a3023e7e3730290372a7c5fa76a1e65006cc3de5df5b03aa7a52da81e1113031",
     "releaseTxHash": "d59a54682df089213ee1c77c75126b75476b9def21d7f81272f4ccc2726a2287",
     "milestoneAmountLovelace": 3000000
+  },
+  "publicEndpoints": {
+    "dashboard": "https://okokok04.github.io/stellarvault/",
+    "backend": "https://stellarvault-backend.onrender.com",
+    "backendHost": "Render (free web service, no persistent disk)"
+  },
+  "publicEscrowLifecycleProof": {
+    "description": "Same lock -> release cycle as escrowLifecycleProof, but run through the public backend URL above instead of locally, proving the hosted service can build/sign/submit transactions end-to-end.",
+    "lockTxHash": "8821def36b75504d769e057eb3186a8fe30b64f23ad4dfbfb0fcb4218b99617c",
+    "releaseTxHash": "cbe865950d0a57012b9cb719f6303daeb339a592a8466f5bd5e2e8243c6878a0",
+    "milestoneAmountLovelace": 2000000
   }
 }
