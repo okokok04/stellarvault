@@ -1,5 +1,6 @@
 import type { CreateEscrowInput, EscrowRecord } from "../types/escrow";
 import type { FeedbackInput, FeedbackRecord } from "../types/feedback";
+import type { PlatformStats } from "../types/stats";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 
@@ -51,4 +52,6 @@ export const api = {
       method: "POST",
       body: JSON.stringify(input),
     }),
+
+  getStats: () => request<PlatformStats>("/stats"),
 };

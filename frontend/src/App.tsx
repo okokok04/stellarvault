@@ -2,9 +2,11 @@ import { EscrowForm } from "./components/EscrowForm";
 import { EscrowList } from "./components/EscrowList";
 import { FeedbackForm } from "./components/FeedbackForm";
 import { FeedbackList } from "./components/FeedbackList";
+import { StatsBar } from "./components/StatsBar";
 import { WalletConnect } from "./components/WalletConnect";
 import { useEscrows } from "./hooks/useEscrows";
 import { useFeedback } from "./hooks/useFeedback";
+import { useStats } from "./hooks/useStats";
 import { useWallet } from "./hooks/useWallet";
 
 export function App() {
@@ -23,6 +25,7 @@ export function App() {
     loading: feedbackLoading,
     submitFeedback,
   } = useFeedback();
+  const { stats, loading: statsLoading } = useStats();
 
   return (
     <>
@@ -37,6 +40,8 @@ export function App() {
         </div>
         <WalletConnect wallet={wallet} />
       </header>
+
+      <StatsBar stats={stats} loading={statsLoading} />
 
       {error && <div className="error-banner">{error}</div>}
 
