@@ -137,14 +137,28 @@ with a disk if you need the history to persist.
 
 ## 9. Finish the submission checklist
 
-- [ ] Push this repo to a public GitHub repository.
-- [ ] Run `scripts/deploy-preprod.ts --verify` and commit the resulting
+**Level 4 (First Quarter):**
+
+- [x] Push this repo to a public GitHub repository.
+- [x] Run `scripts/deploy-preprod.ts --verify` and commit the resulting
       `docs/deployment.json`.
-- [ ] Fill in the script address / tx link / live URLs in the root
+- [x] Fill in the script address / tx link / live URLs in the root
       README's "Live Preprod deployment" section.
-- [ ] Confirm `.github/workflows/ci.yml` has a green run on `main`.
-- [ ] Create the product's X (Twitter) profile — see
+- [x] Confirm `.github/workflows/ci.yml` has a green run on `main`.
+- [x] Create the product's X (Twitter) profile — see
       [`demo/X_PROFILE.md`](../demo/X_PROFILE.md) — and link it in the README.
 - [ ] Record the demo video following
       [`demo/DEMO_SCRIPT.md`](../demo/DEMO_SCRIPT.md).
-- [ ] Confirm you have ≥ 15 meaningful commits (`git log --oneline | wc -l`).
+- [x] Confirm you have ≥ 15 meaningful commits (`git log --oneline | wc -l`).
+
+**Level 5 (Full Moon) — additive on top of Level 4:**
+
+- [x] Extend the MVP (feedback loop + `GET /stats` transparency endpoint).
+- [ ] 50 **real** Preprod users with verifiable wallet addresses — not
+      the synthetic load-test set in
+      [`docs/synthetic-users.md`](synthetic-users.md). See the outreach
+      plan in [`docs/FEEDBACK.md`](FEEDBACK.md#getting-real-testers).
+- [x] Feedback loop documented — [`docs/FEEDBACK.md`](FEEDBACK.md).
+- [x] Documentation updated to match the extended product (this file,
+      `USAGE.md`, `ARCHITECTURE.md`, `CHANGELOG.md`).
+- [x] Confirm you have ≥ 20 meaningful commits since Level 4's submission.
