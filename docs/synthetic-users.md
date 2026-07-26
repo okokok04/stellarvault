@@ -1,0 +1,62 @@
+# Synthetic load-test dataset
+
+> **What this is:** 50 freshly generated Cardano Preprod wallets, each of
+> which submitted one real, on-chain transaction locking an escrow with
+> the deployed StellarVault validator.
+>
+> **What this is not:** a record of 50 real people using the product.
+> Every wallet was generated, funded, and driven by
+> [`scripts/generate-synthetic-load.ts`](../scripts/generate-synthetic-load.ts)
+> using this project's own service wallet — there is no human behind any
+> of these addresses. Don't cite this as "user acquisition."
+
+## Why this exists
+
+Before trying to get real testers, it's worth knowing the contract and
+backend actually hold up across many independent wallets — not just the
+one service wallet used throughout earlier development and demoing.
+This dataset is that check: 50 separate keypairs, each with its own
+UTxOs, each independently building, signing, and submitting a real
+`Release`-eligible escrow lock against `contracts/validators/escrow.ak`.
+
+It also produced a real bug fix: the first attempt raced sequential
+funding batches against the service wallet's own change output and hit
+`ConwayMempoolFailure "All inputs are spent"` — Blockfrost only reflects
+*confirmed* UTxO state, so a blind sleep between dependent transactions
+isn't a substitute for actually polling for confirmation. See
+`waitForConfirmation` in the script.
+
+## Results
+
+- **Network:** Cardano Preprod
+- **Script address:** [`addr_test1wzpxqahdn4aqzwuc5x9hc94m0ljqhnc8e9tknca65nm6rdctz5fc9`](https://preprod.cardanoscan.io/address/addr_test1wzpxqahdn4aqzwuc5x9hc94m0ljqhnc8e9tknca65nm6rdctz5fc9)
+- **Wallets generated:** 50
+- **Successful on-chain locks:** 50 / 50
+- **Funding transaction:** see `fundTxHashes` in [`synthetic-users.json`](synthetic-users.json)
+
+Full machine-readable list of addresses and per-wallet lock transaction
+hashes: [`synthetic-users.json`](synthetic-users.json). Every hash is
+independently verifiable on
+[preprod.cardanoscan.io](https://preprod.cardanoscan.io) or via
+Blockfrost's `/txs/{hash}` endpoint.
+
+## Reproducing this
+
+```sh
+cd scripts
+npm install
+cp .env.example .env   # BLOCKFROST_PROJECT_ID + a funded WALLET_SEED
+npm run gen:synthetic -- --count=50
+```
+
+Seeds for the generated wallets are written to
+`docs/.synthetic-wallets.local.json`, which is gitignored — they're
+throwaway Preprod-only keys, but there's no reason to publish private
+keys even for worthless testnet funds.
+
+## Getting real users (the actual Level 5 requirement)
+
+This dataset does not satisfy "50 Preprod users" in the sense the
+program means it. That requires real people, with wallets they control,
+choosing to try the product — see the outreach plan and feedback
+process in [`FEEDBACK.md`](FEEDBACK.md).

@@ -1,0 +1,263 @@
+{
+  "disclaimer": "SYNTHETIC LOAD-TEST DATASET — not real distinct users. Every wallet here was generated, funded, and driven by scripts/generate-synthetic-load.ts using this project's own service wallet. See docs/synthetic-users.md.",
+  "network": "Preprod",
+  "scriptAddress": "addr_test1wzpxqahdn4aqzwuc5x9hc94m0ljqhnc8e9tknca65nm6rdctz5fc9",
+  "generatedAt": "2026-07-26T10:43:42.313Z",
+  "totalWallets": 50,
+  "successfulLocks": 50,
+  "fundTxHashes": [
+    "84c77a67bc321dc90739ef527f15d3d76bd0e8545351d7fb2f94f05ed1562746"
+  ],
+  "wallets": [
+    {
+      "address": "addr_test1qpvh5j84wfh62fh3ync67gy7vn4kjrmlqv3ua92tyysc5fxjnzcyt02pnkkuhvz5d2lfle2vqu3pzrqyeqjtzrdj4ursfcktf3",
+      "lockTxHash": "fc20d9013583e0946029eced96ecda5759bf2a5bc9699a43d9f6b6f3ea932519",
+      "error": null
+    },
+    {
+      "address": "addr_test1qra7ccs5rvd9sy2kheqtjt5rte4ptk8yku603us6xmr0ly549n7uq98akryc5kta4qza6c38gut36dlfxfq2vyrjgu4qvf8sj0",
+      "lockTxHash": "828f1ebce23653ff261fca65b675a644f6d691298736f7f21bef15bfe24d0aab",
+      "error": null
+    },
+    {
+      "address": "addr_test1qr7wx008ytw2tp520nle4jl4d8yqcyvlmtx5lgs3k7x75knkxpgj9mfnc0fcjm4g7geucay8u928p0az58gxfwg623lqy3lzq9",
+      "lockTxHash": "bdf857fe7cf8c5861c80c668b1b632e55327d4e6a1e889a5c8226ff27ce9a023",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpta2k2l463ek5z3ujp3gn22ya6vs27ny26n77m9xk29dpf2w7cjf4tjf0glwj8fxz5agwfdrps0qxpklqzx0dzzmy3qrtc8x8",
+      "lockTxHash": "e858245bcf731f601e6e97c4526e6b4ad8dc26f4b92053dd1cf8e3ef363ccbe3",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrsat3y2s929kpgt6slyfutvvpthf5042uan55stct3y03gk4gf8908e8pzg88z6r597p6x4jjkd3swalkmj4j2y6wjq5e054c",
+      "lockTxHash": "6f63cbbeb0639b1e60ea0952311d48f052fb192fc9f2b363844fa2d766c1c8e7",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqy3uyd8vrky2xzj2wah3uzuqyy3naawt640avetf2l4jmnfk38yahyfan8je7y0vkk8amt2tncakrwkmnvtr220ayxsntxct5",
+      "lockTxHash": "3db8c35ada4ba089713512427099cfbbefbc76dca59d37e7e8a6e8a006218374",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzak9ktdkzp22ttq3ecd5ny7edh0zm5uvxw9ky5vfl4hr9tl53zqevm6txhe5n48v438rlnmpcfvj8h8qhyyelkxtugsmt9z6g",
+      "lockTxHash": "5dbc20fbd3538306eecdc710597793551ebf896df3a2ad991a93890fa99a1b4e",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqsr6z7578qx9d626rw25gfgfalrm0dzj29n44lfgcxfr3ej9f6dur7dh26zhf2ef6vlug9derts62c5du3rqvh2ktqqut0d37",
+      "lockTxHash": "add75a566034380aa66211e08be066a174e58279fe4b4d395c896c9077ed54e7",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqudfqv7cd9re29wva5mazjlqyuefhk5re8ca0dqksjxm23pzzcq52zsjg26cnl3mapy6j6l6mspr7yvlxxqu4rqd0cslm80c8",
+      "lockTxHash": "d717fcddcca6521b9715c78d8977aa0d8f82dda6b0f88ba70cffef108d2c20d9",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzxhwm2chxg8l9lul2x7llt3qn37xspcxjgdp520lzg32zz0t9f2x82jy0f33z80v2fyd7e6urxsznpxaaxf4dzlj0mswl6dv6",
+      "lockTxHash": "0882cb0478c22e31a5a7548f9b71f0f854b04aa3c49fbc8e6dafe409a6750b4d",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqfd8nentc4kerw39r5yea4frwwm0yt5d90ng26p4d4mxlky9vlnpq8jax87tch29k53g28eg2mxueycy8ynatvzkd5qn4haey",
+      "lockTxHash": "9b321b95f9e94edfe861d76f02e96f8f0d79f15a34fbb3176ea7b03bcda1efbb",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpxxzyzgmeszsvxd4ux07pg9rc05zgpxw9kzq6tdsc68h76q2r9u0yv6xgddek5vwwvxzpzzawes0gnpz9htfgg3586sdhl7rc",
+      "lockTxHash": "7798723a01f0db7cb1f76cb4065486fe649d3bad53950c6781e00ff9514cf5b3",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzszxsznm5cau0teg96vcvxrfhsfl4e7w6wy4n7shwzms7yg27dufawhsktavuanadz4yqvaqcnvkdlyva8m6qgxafksrd5wsf",
+      "lockTxHash": "755f1b50d4cf1b5ab46163bd23cccd614c0cf19376c91ab95f5ed9d16db35da9",
+      "error": null
+    },
+    {
+      "address": "addr_test1qp5rp7htudr3pn9da0s324sadryutn9af040rw4padl5p24pxsmqmx53vzskxpelvc3jx8gzmfzd8ufqqmc7p3388wnss4s35r",
+      "lockTxHash": "f262f7460c3e8eb7941b8ffcf00a78ebf418096bfb0ce0637598afb831c27b3b",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrnph755vk8vsjpytu4m7wgzug0y9u0txmfhmuwzqesq9ef8q8s5kxnuwuwknmkuwphj5nxtx2l8f29n9z0g0n2ltd6q9yhgp0",
+      "lockTxHash": "efbb11871a1c7c8602c199136cfb899a2d6ec4e55ab2d4a334b54e9c7f3e452a",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpfkcjkjkgaer55j6etay26w3sfwsvwt4aa7w3tqcq2av2tw2uqym9se56zcjlg3hrhvpf2wes93c8cuq49kd2e3xkmsydgtfz",
+      "lockTxHash": "be0499e9919f52533477b25dbea0ddd958c73fa4741cc10b232cf06bdfe0bd13",
+      "error": null
+    },
+    {
+      "address": "addr_test1qq0rw5swwvas3n8gpvday9zg3qm2xp3z08dktvrcyc7mj09xphwycdp9rf2pzjga8runl4v56xqqvv4dkmu6j4tv0nmqgd06um",
+      "lockTxHash": "ac37191ca4a4beba582247b1b12c2fe42527d446161ee909afea34763fb21642",
+      "error": null
+    },
+    {
+      "address": "addr_test1qz320gs5l0rzjg73lu65ce9lrlsyxhs6ks8lhq4ldzm65ms8f5pva9v24qf4qjhehfsl0a0ngd86c3vjhcf0w70qw0pqm47cjr",
+      "lockTxHash": "1e36f16563c82892746f1e03baf88c4f76c07c006c57c2de437fc007923bdf64",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpkuyruyt2z8f5qmpekw79rm23wla3gfd2jpay40c0lw00cmaln9p9a26whr2yzhu9u0q7zv8ggv7tj0hhxw9qwmhzmq2epfv3",
+      "lockTxHash": "20fdf017cfdd46cdef72894b60b0c0bba8626e7b01d496c0f5e50febfbeaf9e5",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpu4awjtxe3zazhwfp3u2r4mx3ttkx7nfwd8cckgkh2ldc2fp5uvm09fkvgvq75d30dtfan5cvlpkem7wlstgm2xjw0q5zrdrw",
+      "lockTxHash": "80ce215f4b167eb4a6682e3e3625a7e26aeafedc9fd8f24c335cf40720cac20f",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpnl30q2mvnv330f62nmfhngtq2m0getjq2htfhz7g0xkwk9j9f6p34am9s35na9ldygwejwyyua6r9m5rfegqsv8cxq5vqgdt",
+      "lockTxHash": "bbe84b69dc3a3171c8b4a8abda0ac12267dcc0af0beca8e794968d5e81e6d71f",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrtupqhye3xrgy4ugewpxynf4svxs4x8uxj66cerdtadjhlfzj7g4dfu9uk32d52fkr03sf347wzx46qyael97j64w7sxzrm3p",
+      "lockTxHash": "00cd5c88f2616f5d87402297a073ffadc1d30a4fda58f8f7b32be292e64893dd",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzjj7m9w6u4fm8y60yjvy6cldu07ssnxsqzs00j5kk3mvez0necxsvlysqjhdqzd2kzv0kxcwpzdaw202en8hu5ye0sq34yzdy",
+      "lockTxHash": "fa1f7983555d88da0c2ee14dbb8774ccc1562891cd55f88159f433e4efd1c920",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzr36wc7wspfy4wm0mmwa7j95g3hztp0kj4l2gazdnv6rv6dapmlhfzx52kj44enkq6ylx0yv6lr3h988wct2fcrzf2ss89s4x",
+      "lockTxHash": "d50842a65c5c7f49e3ba554ef3b3fd744feef7e9e40951605edf84da3e102da8",
+      "error": null
+    },
+    {
+      "address": "addr_test1qp7epsalrsrvc6sx6yqzy5lkzzelhhaqxesh378ep7j2jlqmr8xfnulp6c6m8ge7uze5etm0szh3ehduy693u5s8lmcql0njru",
+      "lockTxHash": "92711e9f67e0379459ec7eb47d60c8a98106997443d3c0aa12c870e89ded313a",
+      "error": null
+    },
+    {
+      "address": "addr_test1qz58uzkty7w052u5h5hsyr4yx3fml5crfv5zmwukszgmvwhdnz6ufa9luqmjgxt9ketglpf6ct2na8h9pj08xlng3tfslyhr3s",
+      "lockTxHash": "41fa1c72396eb05db1cc71620ae9149ce179b5d272c60b7ab43fe50874a8c171",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpc3snh260mhswcvv97ysmk4shzy62se67fe27t78zya4pgclcy4gvatj8c0maz86xg2pl5q9avukcuskr2l0h289t0s5tjvjc",
+      "lockTxHash": "9df3742fc5972c7854e277cf4aebc0e56768e306cc8e9cdb2571284c5bbb2e85",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzaxs9h5wpfc3yqju7za3du3rryrutx5xny0jqrg9e2wex0x9pvmevhc60s8awvr2cy42044j5xxm6ma5wesreaa55hqjfj520",
+      "lockTxHash": "357c7371ac0e13ac2752c5f548aeb07d3f008c6a8eae1273309fb240c2621556",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpda3wef898zdsla663pm2ruq7cza5j57dl5jcyyu54cjku6977fp4vf4gxwr5vju6dekwud5eehxxmx9p5260vf3xfqcdl24e",
+      "lockTxHash": "294f65dbd1319c28a7a99a62a5975d9409b785f6ded78cf344125e4488868da8",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqy77w7pcwjxjnwr5vqxjs92m28zqz0e9mrag794l4m67w2kplqzdny4f7x7jgfe056r7zw8vxu024vrwf6q3eju57qqwfax0c",
+      "lockTxHash": "4b44d86299d8e339e5b9b4d145cc5de495f81fe65d473a6fe9665027b607d66c",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpakt6snswh99pe4et876pd08vycljzn9gunlylx49afqe4ewh07u5xsfz9clk2rmec44zqwaf6z3ks9l6y9ttufqh5qde36h0",
+      "lockTxHash": "0d46ef23b15946f21798f183293cf93faaf24a23a756e22975bd40ab8b6761db",
+      "error": null
+    },
+    {
+      "address": "addr_test1qz6w6atve80jeaxlmyz6eqaeftjusuw0aspk8xvmxkzwf5lqc95f6dyd64xyuvh5x435kwrkmha77jvm38zc7t6npdaq20wugd",
+      "lockTxHash": "6ef659599291e11774ff425bc95709504f97592a43faa93595997b92c2676828",
+      "error": null
+    },
+    {
+      "address": "addr_test1qp3rlgpls5r8at94v7qwvlhu8w47ny3k3vvw7urack5vyjkrcw27wvjhhjeja2f46g0nr6knyxkrmh6k3y58xpftkvtsv5fwlu",
+      "lockTxHash": "a2251c2f23ac851d8be66c2274bd01462cffa0bc298346597a4500b1e6f407d9",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrttejusxhe7wvyaq3k5zlmtykcd2tmhwdzxjtx45x3jll6a4ppfvtz7s03dkafr85y0e9th9hjke2r4tak25a8r665q73vmkf",
+      "lockTxHash": "c382408c223891c4870b0264d6a817a3614c4b4c1d7fff4bcb8742911514fc1e",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrkzj866dh4vhjxzm4rknc3f85qgl54qsfe3jtvjq0zsvrqz5ppp49fpkfj3clzfqyxvfctyp5pkln386gxyfqvalyqqkvm75e",
+      "lockTxHash": "ce062b569cfd8a14d422102871c834430695e6fb88a9868384f26d44e0afd623",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqtnpqgt37dldp28lthrnug8m9v4utqte3as3kkc3e3kh3ljsal3f5s7x0gam8qzhwummvsyysw746hyuf5wvajctp3slac9un",
+      "lockTxHash": "da65285a068a67847a06c0c49588e5fb46765e544f761c272a790dc61c1d109b",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzydh3dw4j45pq87pn6xwvg076c0camd5c3mw8857p75clvnd6269tk7590nmudn2jdy6g5pc2p3rqyfnwhnju47qnss9a4c99",
+      "lockTxHash": "67fa4d884069b758991dc0790c0d05d485e6ec70d003d2b738b4d2b7e2cb9b1b",
+      "error": null
+    },
+    {
+      "address": "addr_test1qr9l9uulk23rlpleqr73ndsqmwma2agzfa6nuj7y6z40ytrwthdd9j6jyvjh4pgzsytqesc9jeknqfvtv7elqdcln5nquh5vse",
+      "lockTxHash": "a18c2576dd4a17a9c10cae32e98f4995e768a74c3cb746aeb47e724139c77a76",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpgup8ruzhj7auhsgs07s0s2egjyun5lld0g42h8cy5z0azwsk4ae6hhk3lp6yl0kgzfc0k656npsdtldg4gann4mzqq9ucdz6",
+      "lockTxHash": "4510e73c5a5ae272b87da3fb8d78f4d5a2f5c294067157f9022aaa2f1fc2c5eb",
+      "error": null
+    },
+    {
+      "address": "addr_test1qqtqe676p887chx7s950n5gsdall45j3vkul7sysrs50znpke6uwvd8462d7242fcqrluscx5md5hap44rmzl8w572lqjhl493",
+      "lockTxHash": "c94239860f285a9d80381d916270089159cb655bebe90e10012f7d184621849e",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrj8yrg7hu7llpnhmwckdcmaq03rcn2qv4wqhku0svs3gs0s95lxvjtuul5kyd4ce6pw2mrjasqhkmgztsmlamz6x68qkzyw2w",
+      "lockTxHash": "ae58aadc17ba275720b519f9e3d4f67eff9890e402110298e9d6f2ebc157b3c1",
+      "error": null
+    },
+    {
+      "address": "addr_test1qr0xm78qh8t3hndlcu9lh63p849450zpur84sjfvac5lpcf6hacdyxj34wfssyu23e600na8xc33cverutmfnv3lhlcsfcz4f2",
+      "lockTxHash": "f954483d871b468a79801d6021f0bc4d6f4a7fa1fc8200237b9945ed427be210",
+      "error": null
+    },
+    {
+      "address": "addr_test1qp8dlmfquch4uu3np69s48r3ehm94r8he2396tjcugvg7tsvzuqzrqwhztgctkecsy7yqkladwr9trkcl7txf0xznleqts56l3",
+      "lockTxHash": "f22ad32f99854355d45d7d3ec70b48c2bcf0f14dfc62cb6f5b2665a052d76915",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrf2q2r2u6nnsv5krskregd4432mq6ndhuqmzn0sxl3ww7eelnf4qu7a6sszpme34dh90ewgzcflz5u9fwa8c8g88peshc8pvs",
+      "lockTxHash": "bd29bf58d165b70a77efe9a07d29fb64db2a713b7777e487035ac4e525756130",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpy8zspnqe074vfz3zlegwvdxr4m6lqkevh9xaema9yxc428yz3xr5pymuy04f4plk0xemwps5ftnp6nw6jahag6hd4ses88g3",
+      "lockTxHash": "29f6cfa9d4e7e1d7fa4e3650d37420e1817d7020a0f5398ba027f92693fd0e1b",
+      "error": null
+    },
+    {
+      "address": "addr_test1qrg8un24qw8h8r3ymeu9n97ck4fh0jkedkheznda2qtvsm4j7mqq6pw0w04quamawj0j28gxw2lugf38x0yjpjd9rn9qh57vhp",
+      "lockTxHash": "79b8e40dc968d7f5b7adb1edb9c202ba56a952a60d383cf95091111f5cb51435",
+      "error": null
+    },
+    {
+      "address": "addr_test1qz0dup7mvsuvyuqgtagfs7kl638t3jyj6le8dlz8t7xmq3uedaufu5g6qz8dwj65hk3sjm5szw63h203hzgl8l4gw0mq6m3z5f",
+      "lockTxHash": "cddbcfd311181f846e8c56e0561a51e964aa410e0d2bef9b8974715fbb93af40",
+      "error": null
+    },
+    {
+      "address": "addr_test1qzpx6e57evx52s06fjk5n3yly6nc034c58qs0qpg9e5gqe95v0l84xdeet2m46m9pfph08vrereqmpuuqxd7tp7ktfaqydla4s",
+      "lockTxHash": "e59480fa8e8413b3af06bd281dad6f9edf295d7668ed212d37093d7096fd1e57",
+      "error": null
+    },
+    {
+      "address": "addr_test1qp885dkgz96apszzrz3z7z77qjpgsga33cg8dztr8fxcc6wj65798r3yeg2mt3gy2h3rmnpz2z8zw5tphcmz8fsfq78sltcwfk",
+      "lockTxHash": "13261324c52994ae2f865cbf461760975fb945217cd0ab528276add7debfc6a4",
+      "error": null
+    },
+    {
+      "address": "addr_test1qpxrspw2zp5wt88z9wjyfvel4tugu8yujzkzu93gylgfyamwwuyvhuejra85cvs9kpx80h8xaf2pgllnprsa7vx5mghs9qsg8e",
+      "lockTxHash": "87f791dced85674726437a3ec381361a18f00251a1d77d775d6795eb31b1148c",
+      "error": null
+    }
+  ]
+}
