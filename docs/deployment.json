@@ -1,0 +1,14 @@
+{
+  "network": "Preprod",
+  "scriptAddress": "addr_test1wzpxqahdn4aqzwuc5x9hc94m0ljqhnc8e9tknca65nm6rdctz5fc9",
+  "walletAddress": "addr_test1qp5lx2yjzk9mr2wssuvscuqc6enrm2dk58mhe8z9htn95fhfdxy327pzsacya6pkp08xv9rsu57lhrqzgwh86kr67e6salu89d",
+  "validatorTitle": "escrow.escrow.spend",
+  "bootstrapTxHash": "eed5c18ad36cf970dcfbd77ded33d5ef8e71d063c37d54fe0ae5efb4ae777806",
+  "deployedAt": "2026-07-26T04:05:12.324Z",
+  "escrowLifecycleProof": {
+    "description": "A real lockFunds() -> releaseFunds() run against the deployed validator, using the same buyer/seller/arbiter address for simplicity. Confirms the Release redeemer path executes and pays out on real Preprod.",
+    "lockTxHash": "a3023e7e3730290372a7c5fa76a1e65006cc3de5df5b03aa7a52da81e1113031",
+    "releaseTxHash": "d59a54682df089213ee1c77c75126b75476b9def21d7f81272f4ccc2726a2287",
+    "milestoneAmountLovelace": 3000000
+  }
+}
