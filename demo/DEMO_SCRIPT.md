@@ -40,10 +40,14 @@ shown is real and checkable on cardanoscan afterward.
    second time on an already-settled escrow; show the `409` response,
    proving the API (and, underneath it, the validator) refuses to move
    funds twice.
-8. **CI/CD (15s)** — show the green checks on the latest commit / the
+8. **Feedback loop (20s)** — scroll to "Leave feedback", submit a rating
+   + message, show it appear immediately in "Recent feedback" below —
+   and in the stat-tile row at the top (feedback count / average rating
+   ticking up). Mention `docs/FEEDBACK.md` for the triage process.
+9. **CI/CD (15s)** — show the green checks on the latest commit / the
    Actions tab, and the GitHub Pages deployment.
-9. **Close (10s)** — repo URL, X profile handle, one sentence on what's
-   next (see README "Roadmap").
+10. **Close (10s)** — repo URL, X profile handle, one sentence on what's
+    next (see README "Roadmap").
 
 ## Recording notes
 
