@@ -91,6 +91,12 @@ above, and keep a local record of what it believes on-chain state to be.
   loop's collection endpoint (`POST /feedback`, `GET /feedback`,
   `PATCH /feedback/:id/status`). Same file-store pattern as escrows;
   see `docs/FEEDBACK.md` for the triage process built on top of it.
+  `POST /feedback` is rate-limited (`src/lib/rateLimit.ts`, a minimal
+  in-memory per-IP sliding window) since it's an open, unauthenticated
+  endpoint on the public internet.
+- `src/routes/stats.ts` — `GET /stats`, a live aggregate over the escrow
+  and feedback stores (never its own persisted state, so it can't drift
+  from what those two endpoints show).
 
 The backend is deliberately not the source of truth for fund custody: if
 the JSON file were lost entirely, the actual locked funds and who can
