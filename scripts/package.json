@@ -7,6 +7,7 @@
     "deploy:preprod": "tsx deploy-preprod.ts",
     "deploy:preprod:verify": "tsx deploy-preprod.ts --verify",
     "gen:synthetic": "tsx generate-synthetic-load.ts",
+    "verify:synthetic": "tsx verify-synthetic-users.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

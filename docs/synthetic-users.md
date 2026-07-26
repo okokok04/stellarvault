@@ -40,6 +40,17 @@ independently verifiable on
 [preprod.cardanoscan.io](https://preprod.cardanoscan.io) or via
 Blockfrost's `/txs/{hash}` endpoint.
 
+## Verifying this
+
+```sh
+cd scripts
+npm run verify:synthetic
+```
+
+Independently re-checks every `lockTxHash` in
+[`synthetic-users.json`](synthetic-users.json) against Blockfrost — does
+not trust the generation run's own log output. Last run: 50/50 confirmed.
+
 ## Reproducing this
 
 ```sh
