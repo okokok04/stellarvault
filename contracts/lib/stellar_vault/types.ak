@@ -5,7 +5,6 @@
 /// *why* a milestone was approved (scope, deliverables, messages) stays
 /// off-chain — the validator only ever needs to know *who* can move
 /// funds and *under what condition*.
-
 /// One escrow covers a single milestone payment between a buyer and a
 /// seller, with an arbiter who can only act as a tie-breaker.
 pub type EscrowDatum {

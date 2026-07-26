@@ -1,16 +1,15 @@
+use aiken/collection/list
+use aiken/interval.{Finite}
+use cardano/address.{VerificationKey}
+use cardano/assets.{lovelace_of}
+use cardano/transaction.{Output, Transaction}
+
 /// Pure predicates shared by every spend path in the escrow validator.
 ///
 /// Keeping these as small, independently-testable functions is the point:
 /// the privacy/security-critical guarantee of this contract ("funds only
 /// move when the right party signs and the right payee gets paid") lives
 /// entirely in these three checks, not scattered across the validator body.
-
-use aiken/collection/list
-use aiken/interval.{Finite}
-use cardano/address.{VerificationKeyCredential}
-use cardano/assets.{lovelace_of}
-use cardano/transaction.{Output, Transaction}
-
 /// Is `key` one of the transaction's required signers?
 pub fn signed_by(transaction: Transaction, key: ByteArray) -> Bool {
   list.has(transaction.extra_signatories, key)
@@ -23,7 +22,7 @@ pub fn paid_at_least(outputs: List<Output>, key: ByteArray, amount: Int) -> Bool
     outputs,
     fn(output) {
       when output.address.payment_credential is {
-        VerificationKeyCredential(hash) ->
+        VerificationKey(hash) ->
           hash == key && lovelace_of(output.value) >= amount
         _ -> False
       }
