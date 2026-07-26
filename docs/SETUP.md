@@ -118,6 +118,23 @@ only requirements: set the same environment variables as `backend/.env`,
 expose port `PORT` over HTTPS, and persist `DATA_DIR` across restarts (a
 small volume/disk is enough — it's a JSON file).
 
+The included [`render.yaml`](../render.yaml) blueprint deploys
+`backend/` to [Render](https://render.com)'s free web service tier in
+one step:
+
+1. In the Render dashboard: **New +** → **Blueprint** → select this repo.
+2. Render reads `render.yaml` and creates the `stellarvault-backend`
+   service; fill in `BLOCKFROST_PROJECT_ID` and `WALLET_SEED` when prompted
+   (these are marked `sync: false` so Render asks for them instead of
+   storing them in the repo).
+3. Once deployed, copy the service's `https://*.onrender.com` URL.
+
+Render's **free** tier has no persistent disk, so `DATA_DIR` resets on
+every redeploy/restart — the JSON escrow store is a cache, not the
+source of truth (the ledger is), so this only means the dashboard's
+history resets, not that funds are ever at risk. Upgrade to a paid plan
+with a disk if you need the history to persist.
+
 ## 9. Finish the submission checklist
 
 - [ ] Push this repo to a public GitHub repository.

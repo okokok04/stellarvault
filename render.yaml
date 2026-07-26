@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: stellarvault-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NETWORK
+        value: Preprod
+      - key: DATA_DIR
+        value: ./data
+      - key: BLOCKFROST_PROJECT_ID
+        sync: false
+      - key: WALLET_SEED
+        sync: false
