@@ -1,7 +1,7 @@
 name = "stellarvault/escrow"
 version = "0.1.0"
 compiler = "v1.1.9"
-plutus = "v3"
+plutus = "v2"
 license = "MIT"
 description = "StellarVault milestone escrow validator for Cardano"
 

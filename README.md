@@ -67,7 +67,7 @@ demo/        Demo video script and X profile launch copy
 
 ## Tech stack
 
-- **Smart contract**: [Aiken](https://aiken-lang.org) → Plutus V3
+- **Smart contract**: [Aiken](https://aiken-lang.org) → Plutus V2
 - **Off-chain**: Node.js, TypeScript, Express, [Lucid](https://github.com/spacebudz/lucid), [Blockfrost](https://blockfrost.io)
 - **Frontend**: Vite, React, TypeScript, CIP-30 wallet connect
 - **CI/CD**: GitHub Actions (contract check/build, backend + frontend
