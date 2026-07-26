@@ -1,21 +1,17 @@
 # X (Twitter) profile — launch copy
 
-Creating the account itself is a manual step (needs a phone/email you
-control) — this file is the copy to paste in once it exists, and a small
-posting plan for "building in public."
+Live profile: [x.com/manh71546](https://x.com/manh71546).
 
-## Handle
-
-Try, in order of preference: `@stellarvault_io`, `@stellarvaultapp`,
-`@build_stellarvault`, or add a stray underscore/number if all are taken.
+This file is the bio/pinned-post copy to paste in, and a small posting
+plan for "building in public."
 
 ## Profile
 
-- **Name**: StellarVault
+- **Name**: StellarVault (or "StellarVault — builder: Mạnh")
 - **Bio** (≤160 chars):
   > Trustless milestone escrow for freelance work, on Cardano. MVP live
   > on Preprod. Building in public. ⛓️
-- **Link**: the GitHub repo URL (or the live dashboard URL once hosted)
+- **Link**: https://github.com/okokok04/stellarvault (or the live dashboard URL once hosted)
 - **Location**: (optional, your choice)
 - **Header image**: a simple screenshot of the dashboard's "New milestone
   escrow" form, or a plain graphic with the tagline.
