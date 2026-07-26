@@ -1,7 +1,10 @@
 import { EscrowForm } from "./components/EscrowForm";
 import { EscrowList } from "./components/EscrowList";
+import { FeedbackForm } from "./components/FeedbackForm";
+import { FeedbackList } from "./components/FeedbackList";
 import { WalletConnect } from "./components/WalletConnect";
 import { useEscrows } from "./hooks/useEscrows";
+import { useFeedback } from "./hooks/useFeedback";
 import { useWallet } from "./hooks/useWallet";
 
 export function App() {
@@ -15,6 +18,11 @@ export function App() {
     refundEscrow,
     resolveEscrow,
   } = useEscrows();
+  const {
+    feedback,
+    loading: feedbackLoading,
+    submitFeedback,
+  } = useFeedback();
 
   return (
     <>
@@ -46,6 +54,15 @@ export function App() {
           onRefund={refundEscrow}
           onResolve={resolveEscrow}
         />
+      </section>
+
+      <section style={{ marginTop: "2rem" }}>
+        <FeedbackForm onSubmit={submitFeedback} />
+      </section>
+
+      <section style={{ marginTop: "2rem" }}>
+        <h2 className="section-title">Recent feedback</h2>
+        <FeedbackList feedback={feedback} loading={feedbackLoading} />
       </section>
     </>
   );
