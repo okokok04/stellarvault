@@ -8,8 +8,8 @@
     "deploy:preprod:verify": "tsx deploy-preprod.ts --verify"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "lucid-cardano": "^0.10.11"
+    "@lucid-evolution/lucid": "^0.6.0",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

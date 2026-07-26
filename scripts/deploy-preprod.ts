@@ -2,7 +2,12 @@ import "dotenv/config";
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Blockfrost, Lucid, type SpendingValidator } from "lucid-cardano";
+import {
+  Blockfrost,
+  Lucid,
+  validatorToAddress,
+  type SpendingValidator,
+} from "@lucid-evolution/lucid";
 
 /// Deploys (i.e. derives and verifies) the StellarVault escrow validator
 /// on Cardano Preprod. "Deploying" a Plutus validator has no separate
@@ -21,6 +26,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLUEPRINT_PATH = path.resolve(__dirname, "../contracts/plutus.json");
 const VALIDATOR_TITLE = "escrow.escrow.spend";
 const DEPLOYMENT_OUTPUT = path.resolve(__dirname, "../docs/deployment.json");
+const NETWORK = "Preprod" as const;
 const MIN_RECOMMENDED_BALANCE = 5_000_000n;
 const BOOTSTRAP_LOVELACE = 2_000_000n;
 
@@ -49,7 +55,7 @@ function loadValidator(): SpendingValidator {
   if (!compiled) {
     throw new Error(`Validator "${VALIDATOR_TITLE}" missing from plutus.json`);
   }
-  return { type: "PlutusV2", script: compiled.compiledCode };
+  return { type: "PlutusV3", script: compiled.compiledCode };
 }
 
 async function main() {
@@ -58,14 +64,14 @@ async function main() {
   const verify = process.argv.includes("--verify");
 
   console.log("-> Connecting to Blockfrost (Cardano Preprod)...");
-  const lucid = await Lucid.new(
+  const lucid = await Lucid(
     new Blockfrost("https://cardano-preprod.blockfrost.io/api/v0", projectId),
-    "Preprod",
+    NETWORK,
   );
-  lucid.selectWalletFromSeed(seed);
+  lucid.selectWallet.fromSeed(seed);
 
-  const walletAddress = await lucid.wallet.address();
-  const utxos = await lucid.wallet.getUtxos();
+  const walletAddress = await lucid.wallet().address();
+  const utxos = await lucid.wallet().getUtxos();
   const balanceLovelace = utxos.reduce(
     (sum, utxo) => sum + (utxo.assets.lovelace ?? 0n),
     0n,
@@ -82,7 +88,7 @@ async function main() {
   }
 
   const validator = loadValidator();
-  const scriptAddress = lucid.utils.validatorToAddress(validator);
+  const scriptAddress = validatorToAddress(NETWORK, validator);
   console.log(`\n-> Escrow validator script address:\n   ${scriptAddress}`);
 
   let bootstrapTxHash: string | null = null;
@@ -94,9 +100,9 @@ async function main() {
     );
     const tx = await lucid
       .newTx()
-      .payToAddress(scriptAddress, { lovelace: BOOTSTRAP_LOVELACE })
+      .pay.ToAddress(scriptAddress, { lovelace: BOOTSTRAP_LOVELACE })
       .complete();
-    const signed = await tx.sign().complete();
+    const signed = await tx.sign.withWallet().complete();
     bootstrapTxHash = await signed.submit();
     console.log(`   tx submitted: ${bootstrapTxHash}`);
     console.log(
