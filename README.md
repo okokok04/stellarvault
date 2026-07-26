@@ -148,6 +148,10 @@ All three run in CI on every push/PR — see
   manual testing; waiting for each tx to confirm before firing the next
   avoids it. A real fix is a per-request lock or wallet-level tx chaining.
 
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md) for what changed and why, level by level.
+
 ## License
 
 [MIT](LICENSE)
