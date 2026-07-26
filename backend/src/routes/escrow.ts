@@ -14,9 +14,13 @@ export interface OnChainPort {
     milestoneAmountLovelace: number;
     deadlineUnixMs: number;
   }): Promise<{ lockTxHash: string; scriptAddress: string }>;
-  releaseFunds(scriptAddress: string): Promise<string>;
-  refundFunds(scriptAddress: string): Promise<string>;
-  resolveFunds(scriptAddress: string, paySeller: boolean): Promise<string>;
+  releaseFunds(scriptAddress: string, lockTxHash: string): Promise<string>;
+  refundFunds(scriptAddress: string, lockTxHash: string): Promise<string>;
+  resolveFunds(
+    scriptAddress: string,
+    lockTxHash: string,
+    paySeller: boolean,
+  ): Promise<string>;
 }
 
 const createSchema = z.object({
@@ -113,7 +117,7 @@ export function createEscrowRouter(deps: {
     await transition(
       req.params.id,
       "released",
-      (escrow) => onchain.releaseFunds(escrow.scriptAddress),
+      (escrow) => onchain.releaseFunds(escrow.scriptAddress, escrow.lockTxHash),
       res,
     );
   });
@@ -122,7 +126,7 @@ export function createEscrowRouter(deps: {
     await transition(
       req.params.id,
       "refunded",
-      (escrow) => onchain.refundFunds(escrow.scriptAddress),
+      (escrow) => onchain.refundFunds(escrow.scriptAddress, escrow.lockTxHash),
       res,
     );
   });
@@ -137,7 +141,12 @@ export function createEscrowRouter(deps: {
     await transition(
       req.params.id,
       "resolved",
-      (escrow) => onchain.resolveFunds(escrow.scriptAddress, parsed.data.paySeller),
+      (escrow) =>
+        onchain.resolveFunds(
+          escrow.scriptAddress,
+          escrow.lockTxHash,
+          parsed.data.paySeller,
+        ),
       res,
     );
   });

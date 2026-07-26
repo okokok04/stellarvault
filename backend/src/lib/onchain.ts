@@ -1,7 +1,16 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Blockfrost, Data, Lucid, type SpendingValidator } from "lucid-cardano";
+import {
+  Blockfrost,
+  credentialToAddress,
+  Data,
+  Lucid,
+  paymentCredentialOf,
+  validatorToAddress,
+  type LucidEvolution,
+  type SpendingValidator,
+} from "@lucid-evolution/lucid";
 import { config } from "../config.js";
 import type { EscrowInput } from "../types/escrow.js";
 
@@ -16,6 +25,7 @@ const BLUEPRINT_PATH = path.resolve(
   "../../../contracts/plutus.json",
 );
 const VALIDATOR_TITLE = "escrow.escrow.spend";
+const NETWORK = "Preprod" as const;
 
 const DatumSchema = Data.Object({
   buyer: Data.Bytes(),
@@ -25,8 +35,8 @@ const DatumSchema = Data.Object({
   deadline: Data.Integer(),
 });
 type OnChainDatum = Data.Static<typeof DatumSchema>;
-// eslint-disable-next-line @typescript-eslint/no-redeclare -- documented
-// lucid-cardano idiom: the schema value doubles as its own static type tag.
+// lucid-evolution's TypeBox-based Data API needs the schema value passed
+// back in as its own static type tag — this cast is the documented idiom.
 const OnChainDatum = DatumSchema as unknown as OnChainDatum;
 
 const RedeemerSchema = Data.Enum([
@@ -35,22 +45,21 @@ const RedeemerSchema = Data.Enum([
   Data.Object({ Resolve: Data.Object({ pay_seller: Data.Boolean() }) }),
 ]);
 type OnChainRedeemer = Data.Static<typeof RedeemerSchema>;
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 const OnChainRedeemer = RedeemerSchema as unknown as OnChainRedeemer;
 
-let lucidPromise: Promise<Lucid> | null = null;
+let lucidPromise: Promise<LucidEvolution> | null = null;
 
-export function getLucid(): Promise<Lucid> {
+export function getLucid(): Promise<LucidEvolution> {
   if (!lucidPromise) {
     const cfg = config();
-    lucidPromise = Lucid.new(
+    lucidPromise = Lucid(
       new Blockfrost(
         "https://cardano-preprod.blockfrost.io/api/v0",
         cfg.blockfrostProjectId,
       ),
-      "Preprod",
+      NETWORK,
     ).then((lucid) => {
-      lucid.selectWalletFromSeed(cfg.walletSeed);
+      lucid.selectWallet.fromSeed(cfg.walletSeed);
       return lucid;
     });
   }
@@ -70,90 +79,141 @@ function loadValidator(): SpendingValidator {
         "Run `aiken build` in contracts/ first.",
     );
   }
-  return { type: "PlutusV2", script: compiled.compiledCode };
+  return { type: "PlutusV3", script: compiled.compiledCode };
 }
 
-function keyHashOf(lucid: Lucid, address: string): string {
-  const details = lucid.utils.getAddressDetails(address);
-  if (!details.paymentCredential) {
-    throw new Error(`Address has no payment credential: ${address}`);
-  }
-  return details.paymentCredential.hash;
-}
-
-export async function getScriptAddress(): Promise<string> {
-  const lucid = await getLucid();
-  return lucid.utils.validatorToAddress(loadValidator());
+export function getScriptAddress(): string {
+  return validatorToAddress(NETWORK, loadValidator());
 }
 
 export async function lockFunds(
   input: EscrowInput,
 ): Promise<{ lockTxHash: string; scriptAddress: string }> {
   const lucid = await getLucid();
-  const validator = loadValidator();
-  const scriptAddress = lucid.utils.validatorToAddress(validator);
+  const scriptAddress = getScriptAddress();
 
   const datum: OnChainDatum = {
-    buyer: keyHashOf(lucid, input.buyerAddress),
-    seller: keyHashOf(lucid, input.sellerAddress),
-    arbiter: keyHashOf(lucid, input.arbiterAddress),
+    buyer: paymentCredentialOf(input.buyerAddress).hash,
+    seller: paymentCredentialOf(input.sellerAddress).hash,
+    arbiter: paymentCredentialOf(input.arbiterAddress).hash,
     milestone_amount: BigInt(input.milestoneAmountLovelace),
     deadline: BigInt(input.deadlineUnixMs),
   };
 
   const tx = await lucid
     .newTx()
-    .payToContract(
+    .pay.ToContract(
       scriptAddress,
-      { inline: Data.to<OnChainDatum>(datum, OnChainDatum) },
+      { kind: "inline", value: Data.to<OnChainDatum>(datum, OnChainDatum) },
       { lovelace: BigInt(input.milestoneAmountLovelace) },
     )
     .complete();
 
-  const signed = await tx.sign().complete();
+  const signed = await tx.sign.withWallet().complete();
   const lockTxHash = await signed.submit();
 
   return { lockTxHash, scriptAddress };
 }
 
-async function findEscrowUtxo(lucid: Lucid, scriptAddress: string) {
+/// Every escrow locked by this validator shares the same script address
+/// (it isn't parameterized per-escrow), so more than one escrow's UTxO
+/// can sit there at once. `lockTxHash` — recorded off-chain when the
+/// escrow was created — disambiguates which one this settlement targets.
+async function findEscrowUtxo(
+  lucid: LucidEvolution,
+  scriptAddress: string,
+  lockTxHash: string,
+) {
   const utxos = await lucid.utxosAt(scriptAddress);
-  const [utxo] = utxos;
+  const utxo = utxos.find((candidate) => candidate.txHash === lockTxHash);
   if (!utxo) {
-    throw new Error(`No UTxO found at script address ${scriptAddress}`);
+    throw new Error(
+      `No unspent UTxO from tx ${lockTxHash} found at ${scriptAddress} ` +
+        "(already settled, or not yet confirmed)",
+    );
   }
   return utxo;
 }
 
+/// The validator checks `extra_signatories` (a transaction's declared
+/// *required* signers), which is a separate concept from the wallet
+/// witness that actually signs the tx. Lucid only populates that field
+/// when told to via `addSignerKey` — omitting it means `signed_by`
+/// always sees an empty list and every settlement path fails on-chain.
+function requiredSignerFor(
+  redeemer: OnChainRedeemer,
+  datum: OnChainDatum,
+): string {
+  if (redeemer === "Release" || redeemer === "Refund") {
+    return datum.buyer;
+  }
+  return datum.arbiter;
+}
+
+/// `Release` and `Resolve` are only valid on-chain if a transaction
+/// output actually pays the milestone amount to the right key hash (see
+/// `paid_at_least` in contracts/lib/stellar_vault/utils.ak) — the
+/// datum only stores key hashes, so we rebuild a stake-less address to
+/// pay from each one. `Refund` has no such requirement in the validator,
+/// but paying the buyer is still the only sensible off-chain behavior.
+function payeeAddressFor(redeemer: OnChainRedeemer, datum: OnChainDatum): string {
+  const hash =
+    redeemer === "Release"
+      ? datum.seller
+      : redeemer === "Refund"
+        ? datum.buyer
+        : redeemer.Resolve.pay_seller
+          ? datum.seller
+          : datum.buyer;
+  return credentialToAddress(NETWORK, { type: "Key", hash });
+}
+
 async function settle(
   scriptAddress: string,
+  lockTxHash: string,
   redeemer: OnChainRedeemer,
 ): Promise<string> {
   const lucid = await getLucid();
   const validator = loadValidator();
-  const utxo = await findEscrowUtxo(lucid, scriptAddress);
+  const utxo = await findEscrowUtxo(lucid, scriptAddress, lockTxHash);
+
+  if (!utxo.datum) {
+    throw new Error(`UTxO at ${scriptAddress} has no inline datum`);
+  }
+  const datum = Data.from<OnChainDatum>(utxo.datum, OnChainDatum);
 
   const tx = await lucid
     .newTx()
     .collectFrom([utxo], Data.to<OnChainRedeemer>(redeemer, OnChainRedeemer))
-    .attachSpendingValidator(validator)
+    .pay.ToAddress(payeeAddressFor(redeemer, datum), {
+      lovelace: datum.milestone_amount,
+    })
+    .addSignerKey(requiredSignerFor(redeemer, datum))
+    .attach.SpendingValidator(validator)
     .complete();
 
-  const signed = await tx.sign().complete();
+  const signed = await tx.sign.withWallet().complete();
   return signed.submit();
 }
 
-export function releaseFunds(scriptAddress: string): Promise<string> {
-  return settle(scriptAddress, "Release");
+export function releaseFunds(
+  scriptAddress: string,
+  lockTxHash: string,
+): Promise<string> {
+  return settle(scriptAddress, lockTxHash, "Release");
 }
 
-export function refundFunds(scriptAddress: string): Promise<string> {
-  return settle(scriptAddress, "Refund");
+export function refundFunds(
+  scriptAddress: string,
+  lockTxHash: string,
+): Promise<string> {
+  return settle(scriptAddress, lockTxHash, "Refund");
 }
 
 export function resolveFunds(
   scriptAddress: string,
+  lockTxHash: string,
   paySeller: boolean,
 ): Promise<string> {
-  return settle(scriptAddress, { Resolve: { pay_seller: paySeller } });
+  return settle(scriptAddress, lockTxHash, { Resolve: { pay_seller: paySeller } });
 }

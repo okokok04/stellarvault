@@ -77,7 +77,10 @@ describe("escrow lifecycle transitions", () => {
     expect(res.status).toBe(200);
     expect(res.body.status).toBe("released");
     expect(res.body.settleTxHash).toBe("fake-release-tx");
-    expect(onchain.releaseFunds).toHaveBeenCalledWith("addr_test1scriptfake");
+    expect(onchain.releaseFunds).toHaveBeenCalledWith(
+      "addr_test1scriptfake",
+      "fake-lock-tx",
+    );
   });
 
   it("refuses a second transition once already settled", async () => {
@@ -95,6 +98,7 @@ describe("escrow lifecycle transitions", () => {
     expect(res.body.status).toBe("resolved");
     expect(onchain.resolveFunds).toHaveBeenCalledWith(
       "addr_test1scriptfake",
+      "fake-lock-tx",
       false,
     );
   });
