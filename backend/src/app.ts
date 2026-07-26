@@ -10,6 +10,7 @@ export function createApp(deps: {
   store: EscrowStore;
   onchain: OnChainPort;
   feedbackStore: FeedbackStore;
+  feedbackRateLimit?: { windowMs: number; max: number };
 }): Express {
   const app = express();
   app.use(cors());
@@ -20,7 +21,10 @@ export function createApp(deps: {
   });
 
   app.use("/escrows", createEscrowRouter(deps));
-  app.use("/feedback", createFeedbackRouter({ store: deps.feedbackStore }));
+  app.use(
+    "/feedback",
+    createFeedbackRouter({ store: deps.feedbackStore, rateLimit: deps.feedbackRateLimit }),
+  );
   app.use(
     "/stats",
     createStatsRouter({ store: deps.store, feedbackStore: deps.feedbackStore }),

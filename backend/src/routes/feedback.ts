@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { Router } from "express";
 import { z } from "zod";
 import type { FeedbackStore } from "../lib/feedbackStore.js";
+import { createRateLimiter } from "../lib/rateLimit.js";
 import type { FeedbackRecord } from "../types/feedback.js";
 
 const createSchema = z.object({
@@ -24,16 +25,27 @@ function toPublic(record: FeedbackRecord) {
   return rest;
 }
 
-export function createFeedbackRouter(deps: { store: FeedbackStore }): Router {
+export function createFeedbackRouter(deps: {
+  store: FeedbackStore;
+  rateLimit?: { windowMs: number; max: number };
+}): Router {
   const { store } = deps;
   const router = Router();
+
+  // 10 submissions per 10 minutes per IP by default — generous for a
+  // genuine tester leaving feedback about a few different escrows,
+  // tight enough to blunt a script hammering an open, unauthenticated
+  // POST endpoint. Overridable so tests can use a small window/max.
+  const feedbackRateLimit = createRateLimiter(
+    deps.rateLimit ?? { windowMs: 10 * 60 * 1000, max: 10 },
+  );
 
   router.get("/", async (_req, res) => {
     const records = await store.list();
     res.json(records.map(toPublic));
   });
 
-  router.post("/", async (req, res) => {
+  router.post("/", feedbackRateLimit, async (req, res) => {
     const parsed = createSchema.safeParse(req.body);
     if (!parsed.success) {
       res.status(400).json({ error: parsed.error.flatten() });

@@ -5,7 +5,7 @@ import { createFeedbackMemoryStore } from "../src/lib/feedbackStore.js";
 import { createMemoryStore } from "../src/lib/store.js";
 import type { OnChainPort } from "../src/routes/escrow.js";
 
-function buildApp() {
+function buildApp(feedbackRateLimit?: { windowMs: number; max: number }) {
   const onchain: OnChainPort = {
     lockFunds: async () => ({ lockTxHash: "x", scriptAddress: "y" }),
     releaseFunds: async () => "x",
@@ -13,7 +13,12 @@ function buildApp() {
     resolveFunds: async () => "x",
   };
   const feedbackStore = createFeedbackMemoryStore();
-  const app = createApp({ store: createMemoryStore(), onchain, feedbackStore });
+  const app = createApp({
+    store: createMemoryStore(),
+    onchain,
+    feedbackStore,
+    feedbackRateLimit,
+  });
   return { app, feedbackStore };
 }
 
@@ -39,6 +44,16 @@ describe("POST /feedback", () => {
     expect(res.body.status).toBe("new");
     expect(res.body.rating).toBe(4);
     expect(res.body.contact).toBeUndefined();
+  });
+
+  it("rate-limits repeated submissions from the same client", async () => {
+    const { app } = buildApp({ windowMs: 60_000, max: 2 });
+
+    await request(app).post("/feedback").send(validPayload);
+    await request(app).post("/feedback").send(validPayload);
+    const third = await request(app).post("/feedback").send(validPayload);
+
+    expect(third.status).toBe(429);
   });
 });
 
