@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "deploy:preprod": "tsx deploy-preprod.ts",
-    "deploy:preprod:verify": "tsx deploy-preprod.ts --verify"
+    "deploy:preprod:verify": "tsx deploy-preprod.ts --verify",
+    "gen:synthetic": "tsx generate-synthetic-load.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@lucid-evolution/lucid": "^0.6.0",

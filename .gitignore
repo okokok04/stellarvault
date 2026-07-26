@@ -21,6 +21,7 @@ contracts/build/
 *.skey
 wallet.json
 seed.txt
+docs/.synthetic-wallets.local.json
 
 # Logs
 *.log
