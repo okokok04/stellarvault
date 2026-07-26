@@ -1,4 +1,5 @@
 import type { CreateEscrowInput, EscrowRecord } from "../types/escrow";
+import type { FeedbackInput, FeedbackRecord } from "../types/feedback";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
 
@@ -41,5 +42,13 @@ export const api = {
     request<EscrowRecord>(`/escrows/${id}/resolve`, {
       method: "POST",
       body: JSON.stringify({ paySeller }),
+    }),
+
+  listFeedback: () => request<FeedbackRecord[]>("/feedback"),
+
+  submitFeedback: (input: FeedbackInput) =>
+    request<FeedbackRecord>("/feedback", {
+      method: "POST",
+      body: JSON.stringify(input),
     }),
 };
