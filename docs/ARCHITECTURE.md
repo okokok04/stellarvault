@@ -87,6 +87,10 @@ above, and keep a local record of what it believes on-chain state to be.
   network call. See `backend/tests/escrow.routes.test.ts`.
 - `src/lib/store.ts` — JSON-file-backed record of escrows. This store is
   a convenience cache, never a source of truth — the ledger is.
+- `src/routes/feedback.ts` + `src/lib/feedbackStore.ts` — the feedback
+  loop's collection endpoint (`POST /feedback`, `GET /feedback`,
+  `PATCH /feedback/:id/status`). Same file-store pattern as escrows;
+  see `docs/FEEDBACK.md` for the triage process built on top of it.
 
 The backend is deliberately not the source of truth for fund custody: if
 the JSON file were lost entirely, the actual locked funds and who can

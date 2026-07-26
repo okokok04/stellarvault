@@ -24,7 +24,7 @@ StellarVault backend, can move the money any other way.
 | **Escrow lock transaction** | [`a3023e7e...113031`](https://preprod.cardanoscan.io/transaction/a3023e7e3730290372a7c5fa76a1e65006cc3de5df5b03aa7a52da81e1113031) — 3 ADA locked with an inline `EscrowDatum` |
 | **Escrow release transaction** | [`d59a5468...726a2287`](https://preprod.cardanoscan.io/transaction/d59a54682df089213ee1c77c75126b75476b9def21d7f81272f4ccc2726a2287) — validator executed the `Release` redeemer (`redeemer_count: 1`, `valid_contract: true`) and paid the seller |
 | **Dashboard (live demo)** | [okokok04.github.io/stellarvault](https://okokok04.github.io/stellarvault/) |
-| **Backend API** | not yet hosted publicly — run locally per [`docs/SETUP.md`](docs/SETUP.md#5-run-the-backend) |
+| **Backend API** | [stellarvault-backend.onrender.com](https://stellarvault-backend.onrender.com/health) (Render free tier) |
 
 The lock → release transactions above are a real, on-chain run of the
 full escrow lifecycle (not just a plain payment) — Cardanoscan shows the
@@ -34,11 +34,14 @@ specifies. See [`docs/deployment.json`](docs/deployment.json) (generated
 by `scripts/deploy-preprod.ts`) for the machine-readable record, and
 [`docs/SETUP.md`](docs/SETUP.md) to reproduce this deployment yourself.
 
-> The dashboard above is live, but without a publicly hosted backend it
-> has nothing to call — expect network errors on the escrow list/create
-> actions until the backend is deployed (see `docs/SETUP.md` step 8) and
-> `PREPROD_API_BASE_URL` is set as a repo variable for
-> `deploy-frontend.yml` to build against.
+The dashboard and backend above are both live and wired together — a
+second full lock → release cycle run through the *public* API (not just
+locally) confirmed it end-to-end:
+[lock tx](https://preprod.cardanoscan.io/transaction/8821def36b75504d769e057eb3186a8fe30b64f23ad4dfbfb0fcb4218b99617c),
+[release tx](https://preprod.cardanoscan.io/transaction/cbe865950d0a57012b9cb719f6303daeb339a592a8466f5bd5e2e8243c6878a0).
+Render's free tier has no persistent disk, so the escrow list shown by
+`GET /escrows` resets on redeploy/restart — the ledger, not this cache,
+is the source of truth for fund custody (see `docs/SETUP.md` step 8).
 
 ## Product
 
@@ -46,6 +49,21 @@ by `scripts/deploy-preprod.ts`) for the machine-readable record, and
   [`demo/X_PROFILE.md`](demo/X_PROFILE.md) for bio/pinned post copy.
 - **Demo video**: `<link once recorded>` — script in
   [`demo/DEMO_SCRIPT.md`](demo/DEMO_SCRIPT.md).
+
+## Users & feedback
+
+The dashboard has an in-app feedback form (rating + message, optional
+wallet address) below the escrow list — submissions post to the
+backend and show up immediately in a public "Recent feedback" list on
+the same page. See [`docs/FEEDBACK.md`](docs/FEEDBACK.md) for the
+collection channels, triage lifecycle, and prioritization approach.
+
+Before recruiting real testers, the validator was exercised across 50
+independent, freshly generated Preprod wallets — each one funded and
+each one independently locking a real escrow on-chain. That's a
+load-test, explicitly **not** a claim of 50 real users; see
+[`docs/synthetic-users.md`](docs/synthetic-users.md) for exactly what
+it is and the actual outreach plan for getting real ones.
 
 ## How it works
 
@@ -70,10 +88,10 @@ Full design rationale: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ```
 contracts/   Aiken validator: the on-chain, privacy-critical core
-backend/     Express API + Lucid off-chain transaction builders
-frontend/    Vite + React dashboard (wallet connect, escrow lifecycle UI)
-scripts/     Preprod deployment script
-docs/        Architecture, setup, and usage documentation
+backend/     Express API + Lucid off-chain transaction builders + feedback endpoint
+frontend/    Vite + React dashboard (wallet connect, escrow lifecycle, feedback UI)
+scripts/     Preprod deploy script + synthetic load-test wallet generator
+docs/        Architecture, setup, usage, feedback-loop, and synthetic-dataset docs
 demo/        Demo video script and X profile launch copy
 ```
 

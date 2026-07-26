@@ -70,6 +70,27 @@ Each settlement endpoint is only valid while the escrow's `status` is
 `"locked"` — calling it twice (or on a non-existent id) returns `409` /
 `404` respectively rather than silently no-op'ing.
 
+### Feedback
+
+```sh
+# submit feedback (rating 1-5, message required, wallet/contact optional)
+curl -X POST http://localhost:4000/feedback \
+  -H "Content-Type: application/json" \
+  -d '{"rating": 4, "message": "Lock flow was smooth", "walletAddress": "addr_test1..."}'
+
+# list all feedback (contact is always stripped from the response)
+curl http://localhost:4000/feedback
+
+# move an item through triage (see docs/FEEDBACK.md)
+curl -X PATCH http://localhost:4000/feedback/<id>/status \
+  -H "Content-Type: application/json" \
+  -d '{"status": "triaged"}'
+```
+
+The same form is available directly on the dashboard, below the escrow
+list — see [`docs/FEEDBACK.md`](FEEDBACK.md) for how submissions get
+triaged and prioritized.
+
 ## Amount and time conventions
 
 - All amounts in the API and datum are in **lovelace** (1 ADA =
