@@ -4,6 +4,7 @@ import type { FeedbackStore } from "./lib/feedbackStore.js";
 import type { EscrowStore } from "./lib/store.js";
 import { createEscrowRouter, type OnChainPort } from "./routes/escrow.js";
 import { createFeedbackRouter } from "./routes/feedback.js";
+import { createStatsRouter } from "./routes/stats.js";
 
 export function createApp(deps: {
   store: EscrowStore;
@@ -20,6 +21,10 @@ export function createApp(deps: {
 
   app.use("/escrows", createEscrowRouter(deps));
   app.use("/feedback", createFeedbackRouter({ store: deps.feedbackStore }));
+  app.use(
+    "/stats",
+    createStatsRouter({ store: deps.store, feedbackStore: deps.feedbackStore }),
+  );
 
   app.use((_req, res) => {
     res.status(404).json({ error: "not found" });
