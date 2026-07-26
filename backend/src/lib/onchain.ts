@@ -25,6 +25,9 @@ const DatumSchema = Data.Object({
   deadline: Data.Integer(),
 });
 type OnChainDatum = Data.Static<typeof DatumSchema>;
+// eslint-disable-next-line @typescript-eslint/no-redeclare -- documented
+// lucid-cardano idiom: the schema value doubles as its own static type tag.
+const OnChainDatum = DatumSchema as unknown as OnChainDatum;
 
 const RedeemerSchema = Data.Enum([
   Data.Literal("Release"),
@@ -32,6 +35,8 @@ const RedeemerSchema = Data.Enum([
   Data.Object({ Resolve: Data.Object({ pay_seller: Data.Boolean() }) }),
 ]);
 type OnChainRedeemer = Data.Static<typeof RedeemerSchema>;
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+const OnChainRedeemer = RedeemerSchema as unknown as OnChainRedeemer;
 
 let lucidPromise: Promise<Lucid> | null = null;
 
@@ -65,7 +70,7 @@ function loadValidator(): SpendingValidator {
         "Run `aiken build` in contracts/ first.",
     );
   }
-  return { type: "PlutusV3", script: compiled.compiledCode };
+  return { type: "PlutusV2", script: compiled.compiledCode };
 }
 
 function keyHashOf(lucid: Lucid, address: string): string {
@@ -100,7 +105,7 @@ export async function lockFunds(
     .newTx()
     .payToContract(
       scriptAddress,
-      { inline: Data.to(datum, DatumSchema) },
+      { inline: Data.to<OnChainDatum>(datum, OnChainDatum) },
       { lovelace: BigInt(input.milestoneAmountLovelace) },
     )
     .complete();
@@ -130,7 +135,7 @@ async function settle(
 
   const tx = await lucid
     .newTx()
-    .collectFrom([utxo], Data.to(redeemer, RedeemerSchema))
+    .collectFrom([utxo], Data.to<OnChainRedeemer>(redeemer, OnChainRedeemer))
     .attachSpendingValidator(validator)
     .complete();
 

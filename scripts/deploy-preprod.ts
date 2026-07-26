@@ -49,7 +49,7 @@ function loadValidator(): SpendingValidator {
   if (!compiled) {
     throw new Error(`Validator "${VALIDATOR_TITLE}" missing from plutus.json`);
   }
-  return { type: "PlutusV3", script: compiled.compiledCode };
+  return { type: "PlutusV2", script: compiled.compiledCode };
 }
 
 async function main() {
