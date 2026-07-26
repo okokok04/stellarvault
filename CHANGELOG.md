@@ -23,6 +23,15 @@ it in the same commit/PR as the change it describes, not after.
   synthetic-load script's funding tx and the locks that depend on it —
   a fixed delay let coin selection see stale (already-spent) UTxOs and
   the run failed with `ConwayMempoolFailure`.
+- **Rate limiting**: `POST /feedback` is capped per-IP (minimal in-memory
+  sliding window, `src/lib/rateLimit.ts`) now that it's an open,
+  unauthenticated endpoint on the public internet.
+- **Verified end-to-end in production**, not just locally: the stats
+  bar, feedback form, and public feedback list all confirmed working
+  against the live GitHub Pages dashboard + Render backend (see the
+  screenshot referenced in the PR/commit this line ships with); all 50
+  synthetic-dataset lock transactions independently re-confirmed via
+  `scripts/verify-synthetic-users.ts`.
 
 ## Level 4 — First Quarter
 
