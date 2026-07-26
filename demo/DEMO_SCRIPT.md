@@ -21,7 +21,7 @@ shown is real and checkable on cardanoscan afterward.
    require trusting a stranger or a platform; StellarVault removes that.
 2. **Architecture glance (20s)** — show the repo structure and
    `contracts/validators/escrow.ak` for a few seconds; mention it's Aiken
-   compiled to Plutus V2, and that this validator is the enforcement
+   compiled to Plutus V3, and that this validator is the enforcement
    layer, not the backend.
 3. **Connect wallet (15s)** — open the dashboard, connect the buyer
    wallet, show the address populate the "Buyer address" field.

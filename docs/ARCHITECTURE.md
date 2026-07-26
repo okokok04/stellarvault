@@ -30,7 +30,7 @@ flowchart LR
     end
 
     subgraph Cardano Preprod
-        Validator[Escrow validator\n(Aiken / Plutus V2)]
+        Validator[Escrow validator\n(Aiken / Plutus V3)]
         Ledger[(UTxOs)]
     end
 
