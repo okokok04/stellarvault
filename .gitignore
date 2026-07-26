@@ -9,7 +9,6 @@ build/
 frontend/dist/
 backend/dist/
 contracts/build/
-contracts/plutus.json
 
 # Environment / secrets
 .env
@@ -33,6 +32,7 @@ yarn-error.log*
 .vscode/*
 !.vscode/extensions.json
 .idea/
+.claude/
 .DS_Store
 Thumbs.db
 

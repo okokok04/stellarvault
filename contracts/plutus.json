@@ -1,0 +1,130 @@
+{
+  "preamble": {
+    "title": "stellarvault/escrow",
+    "description": "StellarVault milestone escrow validator for Cardano",
+    "version": "0.1.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.9+2217206"
+    },
+    "license": "MIT"
+  },
+  "validators": [
+    {
+      "title": "escrow.escrow.spend",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/stellar_vault~1types~1EscrowDatum"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/stellar_vault~1types~1EscrowRedeemer"
+        }
+      },
+      "compiledCode": "59035c010100323232323232322533300232323232325332330083001300937540042646644646464a66601c60060022a66602260206ea80240085854ccc038c01c00454ccc044c040dd50048010b0a99980719b87480100044c8c94ccc04cc05800801058c94ccc04cc04800454ccc040cdc4a400860220022c2601260220022c6ea8c050004c040dd50048b18071baa0081533300c3001300d375400426464646464646464646464646464a666034601e0022a6660346600402c01426660066eb0c014c070dd500b0048038a501533301a30130011533301a3300201600a132533301b3014301c3754002266e2401cdd69810180e9baa00114a0600860386ea8c010c070dd5180f9810181018101810181018101810180e1baa01614a0264a6660366600602e01226660086eb0c018c074dd500b8008040a50533301a3013301b3754603e60386ea805440244028c068dd500a1119198008009bac302030213021302130213021302130213021301d375400644a66603e00229404cc894ccc078cdc78010028a51133004004001375c60420026044002444646600200200844a66603e00229404cc894ccc078c94ccc07cc050c080dd50008a99980f99b8f375c604860426ea800401c4cdc4803192999810180c98109baa0011480004dd6981298111baa001325333020301930213754002298103d87a8000132330010013756604c60466ea8008894ccc094004530103d87a800013233322253330263372291100003153330263371e91010000313374a9000198151ba80024bd700a6103d87a8000133006006001375c60480026eb4c094004c0a4008c09c004c8cc004004dd59812981318111baa00422533302400114c103d87a800013233322253330253372291100003153330253371e91010000313374a9000198149ba60024bd700a6103d87a8000133006006001375c60460026eacc090004c0a0008c0980045280a50300830203754601060406ea8008528899802002000981080098110009180e0009180d980e180e0009bad3019301a005375a60300086eb8c05c010dd7180b0021bae3015004301500130140013013001300e37546022601c6ea800858dc3a4000601c002601c601e00260146ea8008dc3a40042c6016601800660140046012004601200260086ea8004526136565734aae7555cf2ab9f5740ae855d101",
+      "hash": "826076ed9d7a013b98a18b7c16bb7fe40bcf07c95769e3baa4f7a1b7"
+    },
+    {
+      "title": "escrow.escrow.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "59035c010100323232323232322533300232323232325332330083001300937540042646644646464a66601c60060022a66602260206ea80240085854ccc038c01c00454ccc044c040dd50048010b0a99980719b87480100044c8c94ccc04cc05800801058c94ccc04cc04800454ccc040cdc4a400860220022c2601260220022c6ea8c050004c040dd50048b18071baa0081533300c3001300d375400426464646464646464646464646464a666034601e0022a6660346600402c01426660066eb0c014c070dd500b0048038a501533301a30130011533301a3300201600a132533301b3014301c3754002266e2401cdd69810180e9baa00114a0600860386ea8c010c070dd5180f9810181018101810181018101810180e1baa01614a0264a6660366600602e01226660086eb0c018c074dd500b8008040a50533301a3013301b3754603e60386ea805440244028c068dd500a1119198008009bac302030213021302130213021302130213021301d375400644a66603e00229404cc894ccc078cdc78010028a51133004004001375c60420026044002444646600200200844a66603e00229404cc894ccc078c94ccc07cc050c080dd50008a99980f99b8f375c604860426ea800401c4cdc4803192999810180c98109baa0011480004dd6981298111baa001325333020301930213754002298103d87a8000132330010013756604c60466ea8008894ccc094004530103d87a800013233322253330263372291100003153330263371e91010000313374a9000198151ba80024bd700a6103d87a8000133006006001375c60480026eb4c094004c0a4008c09c004c8cc004004dd59812981318111baa00422533302400114c103d87a800013233322253330253372291100003153330253371e91010000313374a9000198149ba60024bd700a6103d87a8000133006006001375c60460026eacc090004c0a0008c0980045280a50300830203754601060406ea8008528899802002000981080098110009180e0009180d980e180e0009bad3019301a005375a60300086eb8c05c010dd7180b0021bae3015004301500130140013013001300e37546022601c6ea800858dc3a4000601c002601c601e00260146ea8008dc3a40042c6016601800660140046012004601200260086ea8004526136565734aae7555cf2ab9f5740ae855d101",
+      "hash": "826076ed9d7a013b98a18b7c16bb7fe40bcf07c95769e3baa4f7a1b7"
+    }
+  ],
+  "definitions": {
+    "Bool": {
+      "title": "Bool",
+      "anyOf": [
+        {
+          "title": "False",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "True",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
+    },
+    "ByteArray": {
+      "dataType": "bytes"
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "stellar_vault/types/EscrowDatum": {
+      "title": "EscrowDatum",
+      "description": "Core datum and redeemer types for the StellarVault milestone escrow.\n\n The datum is intentionally minimal: only the three parties and the\n numbers needed to authorize a spend live on-chain. Anything about\n *why* a milestone was approved (scope, deliverables, messages) stays\n off-chain — the validator only ever needs to know *who* can move\n funds and *under what condition*.\n One escrow covers a single milestone payment between a buyer and a\n seller, with an arbiter who can only act as a tie-breaker.",
+      "anyOf": [
+        {
+          "title": "EscrowDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "buyer",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "seller",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "arbiter",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "milestone_amount",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "deadline",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    },
+    "stellar_vault/types/EscrowRedeemer": {
+      "title": "EscrowRedeemer",
+      "description": "The three ways funds locked in an escrow UTxO can move.",
+      "anyOf": [
+        {
+          "title": "Release",
+          "description": "Buyer signs off that the milestone was delivered; seller is paid.",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Refund",
+          "description": "Buyer reclaims funds once the deadline has passed with no release.",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        },
+        {
+          "title": "Resolve",
+          "description": "Arbiter breaks a deadlock and directs funds to one side.",
+          "dataType": "constructor",
+          "index": 2,
+          "fields": [
+            {
+              "title": "pay_seller",
+              "$ref": "#/definitions/Bool"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
