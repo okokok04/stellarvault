@@ -91,6 +91,18 @@ The same form is available directly on the dashboard, below the escrow
 list — see [`docs/FEEDBACK.md`](FEEDBACK.md) for how submissions get
 triaged and prioritized.
 
+### Stats
+
+```sh
+curl http://localhost:4000/stats
+```
+
+Returns a live aggregate — escrow counts by status, total lovelace
+currently locked, feedback count, and average rating — computed on the
+fly from the same stores `GET /escrows` and `GET /feedback` read, so it
+can't drift from what those endpoints show. Shown as a stat-tile row at
+the top of the dashboard.
+
 ## Amount and time conventions
 
 - All amounts in the API and datum are in **lovelace** (1 ADA =
