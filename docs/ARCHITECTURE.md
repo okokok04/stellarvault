@@ -91,9 +91,15 @@ above, and keep a local record of what it believes on-chain state to be.
   loop's collection endpoint (`POST /feedback`, `GET /feedback`,
   `PATCH /feedback/:id/status`). Same file-store pattern as escrows;
   see `docs/FEEDBACK.md` for the triage process built on top of it.
-  `POST /feedback` is rate-limited (`src/lib/rateLimit.ts`, a minimal
-  in-memory per-IP sliding window) since it's an open, unauthenticated
-  endpoint on the public internet.
+  `POST /feedback`, the settlement routes, and `POST /escrows` are all
+  rate-limited (`src/lib/rateLimit.ts`, a minimal in-memory per-IP
+  sliding window) — feedback because it's open and unauthenticated,
+  escrow mutations because each one is a real on-chain transaction paid
+  for by the shared service wallet. `DELETE /feedback/:id` handles
+  spam/abuse moderation.
+- `src/lib/csv.ts` — a small RFC-4180-ish serializer used by
+  `GET /feedback/export.csv`; not a general-purpose library, just enough
+  for exporting our own typed records.
 - `src/routes/stats.ts` — `GET /stats`, a live aggregate over the escrow
   and feedback stores (never its own persisted state, so it can't drift
   from what those two endpoints show).
