@@ -38,5 +38,18 @@ export function useFeedback() {
     [],
   );
 
-  return { feedback, loading, error, refresh, submitFeedback, updateStatus };
+  const removeFeedback = useCallback(async (id: string) => {
+    await api.deleteFeedback(id);
+    setFeedback((prev) => prev.filter((f) => f.id !== id));
+  }, []);
+
+  return {
+    feedback,
+    loading,
+    error,
+    refresh,
+    submitFeedback,
+    updateStatus,
+    removeFeedback,
+  };
 }

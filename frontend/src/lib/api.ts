@@ -19,6 +19,10 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     );
   }
 
+  if (res.status === 204) {
+    return undefined as T;
+  }
+
   return res.json() as Promise<T>;
 }
 
@@ -58,6 +62,8 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify({ status }),
     }),
+
+  deleteFeedback: (id: string) => request<void>(`/feedback/${id}`, { method: "DELETE" }),
 
   getStats: () => request<PlatformStats>("/stats"),
 };
