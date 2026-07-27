@@ -4,7 +4,22 @@ Keeping this in sync with the product is itself part of the Level 5
 requirement ("keeping docs in sync with a changing product") — update
 it in the same commit/PR as the change it describes, not after.
 
-## Unreleased / Level 5 — Full Moon
+## Unreleased / Level 6 — Supermoon
+
+- **Deadline picker fix**: real feedback ("confusing on mobile") turned
+  into a shipped change — +1/+3/+7/+14 day quick-select presets in
+  `EscrowForm.tsx`, native `datetime-local` picker kept as a fallback.
+  First real entry in `docs/FEEDBACK.md`'s feedback → action table.
+- **Escrow list filter + pagination**: status filter buttons
+  (All/Locked/Released/Refunded/Resolved) and a "Show more" button
+  (10 at a time) — the list was unbounded before, which doesn't scale
+  once real users start creating escrows.
+- **In-dashboard feedback triage**: one-click status transitions
+  (triaged/actioned/won't fix) directly on each feedback card, instead
+  of only via a raw `PATCH` call. No auth yet — noted in the README
+  Roadmap as something to add before real volume.
+
+## Level 5 — Full Moon
 
 - **Feedback loop**: in-app feedback form (`POST /feedback`), a public
   "Recent feedback" list (`GET /feedback`, contact details stripped),
