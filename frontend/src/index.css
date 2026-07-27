@@ -156,6 +156,17 @@ input:focus {
   grid-column: 1 / -1;
 }
 
+.escrow-filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.escrow-filters button.primary {
+  color: white;
+}
+
 .escrow-list {
   display: flex;
   flex-direction: column;
