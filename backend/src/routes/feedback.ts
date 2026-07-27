@@ -99,5 +99,16 @@ export function createFeedbackRouter(deps: {
     res.json(toPublic(updated));
   });
 
+  // Moderation: remove spam/abuse. No auth yet (see docs/FEEDBACK.md) --
+  // anyone can delete anyone's feedback, same as anyone can triage it.
+  router.delete("/:id", async (req, res) => {
+    const removed = await store.remove(req.params.id);
+    if (!removed) {
+      res.status(404).json({ error: "feedback not found" });
+      return;
+    }
+    res.status(204).send();
+  });
+
   return router;
 }

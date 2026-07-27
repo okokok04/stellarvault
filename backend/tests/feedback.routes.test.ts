@@ -116,3 +116,22 @@ describe("PATCH /feedback/:id/status", () => {
     expect(res.status).toBe(400);
   });
 });
+
+describe("DELETE /feedback/:id", () => {
+  it("removes a feedback item", async () => {
+    const { app } = buildApp();
+    const created = await request(app).post("/feedback").send(validPayload);
+
+    const res = await request(app).delete(`/feedback/${created.body.id}`);
+    expect(res.status).toBe(204);
+
+    const list = await request(app).get("/feedback");
+    expect(list.body).toHaveLength(0);
+  });
+
+  it("404s on an unknown id", async () => {
+    const { app } = buildApp();
+    const res = await request(app).delete("/feedback/does-not-exist");
+    expect(res.status).toBe(404);
+  });
+});
