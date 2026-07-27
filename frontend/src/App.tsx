@@ -24,6 +24,7 @@ export function App() {
     feedback,
     loading: feedbackLoading,
     submitFeedback,
+    updateStatus,
   } = useFeedback();
   const { stats, loading: statsLoading } = useStats();
 
@@ -67,7 +68,11 @@ export function App() {
 
       <section style={{ marginTop: "2rem" }}>
         <h2 className="section-title">Recent feedback</h2>
-        <FeedbackList feedback={feedback} loading={feedbackLoading} />
+        <FeedbackList
+          feedback={feedback}
+          loading={feedbackLoading}
+          onUpdateStatus={updateStatus}
+        />
       </section>
     </>
   );
