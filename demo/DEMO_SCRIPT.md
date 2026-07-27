@@ -40,13 +40,17 @@ shown is real and checkable on cardanoscan afterward.
    second time on an already-settled escrow; show the `409` response,
    proving the API (and, underneath it, the validator) refuses to move
    funds twice.
-8. **Feedback loop (20s)** — scroll to "Leave feedback", submit a rating
+8. **Feedback loop (25s)** — scroll to "Leave feedback", submit a rating
    + message, show it appear immediately in "Recent feedback" below —
    and in the stat-tile row at the top (feedback count / average rating
-   ticking up). Mention `docs/FEEDBACK.md` for the triage process.
-9. **CI/CD (15s)** — show the green checks on the latest commit / the
-   Actions tab, and the GitHub Pages deployment.
-10. **Close (10s)** — repo URL, X profile handle, one sentence on what's
+   ticking up). Click one of its triage buttons ("Mark triaged") and
+   show the badge update live. Mention `docs/FEEDBACK.md` for the process.
+9. **Escrow list at scale (15s)** — click through the status filter
+   buttons (Locked/Released/...) and, if there are more than 10 escrows,
+   the "Show more" button.
+10. **CI/CD (15s)** — show the green checks on the latest commit / the
+    Actions tab, and the GitHub Pages deployment.
+11. **Close (10s)** — repo URL, X profile handle, one sentence on what's
     next (see README "Roadmap").
 
 ## Recording notes
