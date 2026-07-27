@@ -44,7 +44,7 @@ export function App() {
 
       <StatsBar stats={stats} loading={statsLoading} />
 
-      {error && <div className="error-banner">{error}</div>}
+      {error && <div className="error-banner" role="alert">{error}</div>}
 
       <EscrowForm
         onCreate={createEscrow}

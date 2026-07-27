@@ -55,7 +55,7 @@ export function FeedbackForm({
         .
       </p>
 
-      {error && <div className="error-banner">{error}</div>}
+      {error && <div className="error-banner" role="alert">{error}</div>}
       {sent && !error && (
         <div className="empty-state" style={{ marginBottom: "1rem" }}>
           Thanks — logged.

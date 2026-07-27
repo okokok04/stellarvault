@@ -47,7 +47,7 @@ export function WalletConnect({ wallet }: { wallet: WalletState }) {
           Connect {key}
         </button>
       ))}
-      {wallet.error && <span className="error-banner">{wallet.error}</span>}
+      {wallet.error && <span className="error-banner" role="alert">{wallet.error}</span>}
     </div>
   );
 }

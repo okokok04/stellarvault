@@ -96,7 +96,7 @@ export function EscrowForm({
     <form className="card" onSubmit={handleSubmit}>
       <h2 className="section-title">New milestone escrow</h2>
 
-      {error && <div className="error-banner">{error}</div>}
+      {error && <div className="error-banner" role="alert">{error}</div>}
 
       <div className="form-grid">
         <div>
