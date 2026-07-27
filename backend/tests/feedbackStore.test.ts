@@ -37,6 +37,15 @@ describe("createFeedbackMemoryStore", () => {
     const store = createFeedbackMemoryStore();
     expect(await store.update("missing", { status: "triaged" })).toBeUndefined();
   });
+
+  it("removes a record and reports whether anything was removed", async () => {
+    const store = createFeedbackMemoryStore();
+    await store.create(sampleRecord());
+
+    expect(await store.remove("feedback-1")).toBe(true);
+    expect(await store.list()).toHaveLength(0);
+    expect(await store.remove("feedback-1")).toBe(false);
+  });
 });
 
 describe("createFeedbackFileStore", () => {
@@ -63,5 +72,13 @@ describe("createFeedbackFileStore", () => {
   it("returns an empty list when no file exists yet", async () => {
     const store = createFeedbackFileStore(dataDir);
     expect(await store.list()).toEqual([]);
+  });
+
+  it("removes a record and persists the removal", async () => {
+    const store = createFeedbackFileStore(dataDir);
+    await store.create(sampleRecord());
+
+    expect(await store.remove("feedback-1")).toBe(true);
+    expect(await createFeedbackFileStore(dataDir).list()).toEqual([]);
   });
 });

@@ -16,6 +16,7 @@ export interface FeedbackStore {
     id: string,
     patch: Partial<Pick<FeedbackRecord, "status">>,
   ): Promise<FeedbackRecord | undefined>;
+  remove(id: string): Promise<boolean>;
 }
 
 export function createFeedbackFileStore(dataDir: string): FeedbackStore {
@@ -69,6 +70,14 @@ export function createFeedbackFileStore(dataDir: string): FeedbackStore {
       await writeAll(records);
       return updated;
     },
+
+    async remove(id) {
+      const records = await readAll();
+      const next = records.filter((record) => record.id !== id);
+      if (next.length === records.length) return false;
+      await writeAll(next);
+      return true;
+    },
   };
 }
 
@@ -97,6 +106,9 @@ export function createFeedbackMemoryStore(): FeedbackStore {
       };
       records.set(id, updated);
       return updated;
+    },
+    async remove(id) {
+      return records.delete(id);
     },
   };
 }
