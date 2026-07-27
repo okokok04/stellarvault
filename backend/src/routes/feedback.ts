@@ -1,9 +1,20 @@
 import { randomUUID } from "node:crypto";
 import { Router } from "express";
 import { z } from "zod";
+import { toCsv } from "../lib/csv.js";
 import type { FeedbackStore } from "../lib/feedbackStore.js";
 import { createRateLimiter } from "../lib/rateLimit.js";
 import type { FeedbackRecord } from "../types/feedback.js";
+
+const CSV_COLUMNS: Array<keyof Omit<FeedbackRecord, "contact">> = [
+  "id",
+  "rating",
+  "message",
+  "walletAddress",
+  "status",
+  "createdAt",
+  "updatedAt",
+];
 
 const createSchema = z.object({
   rating: z.number().int().min(1).max(5),
@@ -43,6 +54,15 @@ export function createFeedbackRouter(deps: {
   router.get("/", async (_req, res) => {
     const records = await store.list();
     res.json(records.map(toPublic));
+  });
+
+  // Same privacy rule as the JSON list: contact never leaves the server.
+  router.get("/export.csv", async (_req, res) => {
+    const records = await store.list();
+    const csv = toCsv(records.map(toPublic), CSV_COLUMNS);
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", 'attachment; filename="feedback.csv"');
+    res.send(csv);
   });
 
   router.post("/", feedbackRateLimit, async (req, res) => {

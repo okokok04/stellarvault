@@ -70,6 +70,22 @@ describe("GET /feedback", () => {
   });
 });
 
+describe("GET /feedback/export.csv", () => {
+  it("returns a CSV attachment without contact details", async () => {
+    const { app } = buildApp();
+    await request(app).post("/feedback").send(validPayload);
+
+    const res = await request(app).get("/feedback/export.csv");
+
+    expect(res.status).toBe(200);
+    expect(res.headers["content-type"]).toContain("text/csv");
+    expect(res.headers["content-disposition"]).toContain("feedback.csv");
+    expect(res.text).toContain("id,rating,message,walletAddress,status,createdAt,updatedAt");
+    expect(res.text).toContain(validPayload.message);
+    expect(res.text).not.toContain(validPayload.contact);
+  });
+});
+
 describe("PATCH /feedback/:id/status", () => {
   it("updates status through the triage lifecycle", async () => {
     const { app } = buildApp();
