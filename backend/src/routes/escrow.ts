@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { Router, type Response } from "express";
 import { z } from "zod";
+import { createRateLimiter } from "../lib/rateLimit.js";
 import type { EscrowStore } from "../lib/store.js";
 import type { EscrowRecord, EscrowStatus } from "../types/escrow.js";
 
@@ -38,9 +39,18 @@ const resolveSchema = z.object({
 export function createEscrowRouter(deps: {
   store: EscrowStore;
   onchain: OnChainPort;
+  escrowRateLimit?: { windowMs: number; max: number };
 }): Router {
   const { store, onchain } = deps;
   const router = Router();
+
+  // Every mutating route here submits a real on-chain transaction paid
+  // for by the shared service wallet — unlike feedback, spam here has a
+  // real (if testnet) fee cost and can exhaust the wallet's UTxOs.
+  // Tighter default than feedback's: 20 per 10 minutes per IP.
+  const escrowRateLimit = createRateLimiter(
+    deps.escrowRateLimit ?? { windowMs: 10 * 60 * 1000, max: 20 },
+  );
 
   router.get("/", async (_req, res) => {
     res.json(await store.list());
@@ -55,7 +65,7 @@ export function createEscrowRouter(deps: {
     res.json(escrow);
   });
 
-  router.post("/", async (req, res) => {
+  router.post("/", escrowRateLimit, async (req, res) => {
     const parsed = createSchema.safeParse(req.body);
     if (!parsed.success) {
       res.status(400).json({ error: parsed.error.flatten() });
@@ -113,7 +123,7 @@ export function createEscrowRouter(deps: {
     }
   }
 
-  router.post("/:id/release", async (req, res) => {
+  router.post("/:id/release", escrowRateLimit, async (req, res) => {
     await transition(
       req.params.id,
       "released",
@@ -122,7 +132,7 @@ export function createEscrowRouter(deps: {
     );
   });
 
-  router.post("/:id/refund", async (req, res) => {
+  router.post("/:id/refund", escrowRateLimit, async (req, res) => {
     await transition(
       req.params.id,
       "refunded",
@@ -131,7 +141,7 @@ export function createEscrowRouter(deps: {
     );
   });
 
-  router.post("/:id/resolve", async (req, res) => {
+  router.post("/:id/resolve", escrowRateLimit, async (req, res) => {
     const parsed = resolveSchema.safeParse(req.body);
     if (!parsed.success) {
       res.status(400).json({ error: parsed.error.flatten() });
