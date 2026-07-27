@@ -18,6 +18,27 @@ it in the same commit/PR as the change it describes, not after.
   (triaged/actioned/won't fix) directly on each feedback card, instead
   of only via a raw `PATCH` call. No auth yet — noted in the README
   Roadmap as something to add before real volume.
+- **Feedback status filter**: mirrors the escrow list's filter buttons
+  (All/New/Triaged/Actioned/Won't fix).
+- **Copy-to-clipboard**: script address / lock tx / settle tx on each
+  escrow card — previously only visible shortened, with no easy way to
+  grab the full value.
+- **Escrow rate limiting**: `POST /escrows` and its three settlement
+  routes are now capped per-IP too (20 per 10 min) — unlike feedback,
+  these submit real on-chain transactions paid for by the shared
+  service wallet, so spam here has an actual fee cost.
+- **Feedback CSV export**: `GET /feedback/export.csv` (contact still
+  stripped) for triage/reporting without scripting the JSON API.
+- **Feedback moderation**: `DELETE /feedback/:id`, with a Delete button
+  on the dashboard, for removing spam/abuse.
+- **Health endpoint**: `GET /health` now reports `version` (from
+  `package.json`) and `uptimeSeconds` — useful for confirming a Render
+  redeploy actually picked up the latest code.
+- **Accessibility**: every error banner across the app now has
+  `role="alert"` so assistive tech announces it.
+- **Test coverage**: added for `WalletConnect` (previously untested) and
+  an App-level smoke test rendering the whole tree against a mocked
+  `fetch`.
 
 ## Level 5 — Full Moon
 
