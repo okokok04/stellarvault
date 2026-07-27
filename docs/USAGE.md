@@ -85,6 +85,9 @@ curl http://localhost:4000/feedback
 curl -X PATCH http://localhost:4000/feedback/<id>/status \
   -H "Content-Type: application/json" \
   -d '{"status": "triaged"}'
+
+# export everything as CSV (contact still stripped)
+curl http://localhost:4000/feedback/export.csv -o feedback.csv
 ```
 
 The same form is available directly on the dashboard, below the escrow
