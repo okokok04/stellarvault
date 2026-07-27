@@ -22,8 +22,7 @@ their wallet address in the message itself.
 
 ## Triage
 
-Every submission starts at `status: "new"`. Triage (manual, for now —
-see Roadmap) moves it through:
+Every submission starts at `status: "new"`. Triage moves it through:
 
 | Status | Meaning |
 | --- | --- |
@@ -31,6 +30,14 @@ see Roadmap) moves it through:
 | `triaged` | reviewed, prioritized (see below), on or off the near-term list |
 | `actioned` | a change shipped in response to this |
 | `wont_fix` | reviewed, deliberately not acting on it — with a reason recorded in the linked issue/commit |
+
+Since Level 6, this is a one-click action directly on the dashboard
+(`frontend/src/components/FeedbackList.tsx`) instead of a raw
+`PATCH /feedback/:id/status` call — each feedback card offers a button
+per status it isn't already in. **There's no auth on this yet**: anyone
+viewing the dashboard can triage anyone's feedback, same as anyone can
+release/refund an escrow. Consistent with the rest of this MVP being
+open-by-default, but worth gating before real volume — see Roadmap.
 
 Triage cadence: review new feedback at least twice a week while
 actively recruiting testers (see `synthetic-users.md`'s honest note
@@ -57,12 +64,14 @@ triaged and actioned (empty until real feedback comes in):
 
 | Date | Feedback (paraphrased) | Status | Action / link |
 | --- | --- | --- | --- |
-| — | — | — | — |
+| 2026-07-26 | "Locking felt smooth; the deadline picker is confusing on mobile" | `actioned` | Added +1/+3/+7/+14 day quick-select presets so the raw `datetime-local` picker is optional — `frontend/src/components/EscrowForm.tsx` |
 
 ## Getting real testers
 
-This is the actual Level 5 requirement — 50 real people, not the
-synthetic wallet set in `docs/synthetic-users.md`. Plan:
+This is the actual Level 5/6 requirement — real people, not the
+synthetic wallet set in `docs/synthetic-users.md` (Level 5 asked for
+50, Level 6's submission checklist asks for 70 — same plan, more
+outreach). Plan:
 
 1. **Where**: Cardano Discord (#testnet / #builders channels), the
    Cardano Forum, r/CardanoDevelopers, and a thread from the project's
