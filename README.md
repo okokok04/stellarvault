@@ -55,15 +55,20 @@ is the source of truth for fund custody (see `docs/SETUP.md` step 8).
 The dashboard has an in-app feedback form (rating + message, optional
 wallet address) below the escrow list — submissions post to the
 backend and show up immediately in a public "Recent feedback" list on
-the same page. See [`docs/FEEDBACK.md`](docs/FEEDBACK.md) for the
-collection channels, triage lifecycle, and prioritization approach.
+the same page, each with one-click triage buttons
+(new → triaged → actioned/won't fix). See
+[`docs/FEEDBACK.md`](docs/FEEDBACK.md) for the collection channels,
+triage lifecycle, and prioritization approach — including the first
+real feedback → action entry in its changelog table (a mobile-unfriendly
+deadline picker, fixed with quick-select presets in `EscrowForm.tsx`).
 
 Before recruiting real testers, the validator was exercised across 50
 independent, freshly generated Preprod wallets — each one funded and
 each one independently locking a real escrow on-chain. That's a
-load-test, explicitly **not** a claim of 50 real users; see
+load-test, explicitly **not** a claim of real users; see
 [`docs/synthetic-users.md`](docs/synthetic-users.md) for exactly what
-it is and the actual outreach plan for getting real ones.
+it is and the actual outreach plan for getting real ones (Level 6's
+submission checklist asks for 70).
 
 ## How it works
 
@@ -147,6 +152,9 @@ All three run in CI on every push/PR — see
   `BadInputsUTxO`/`InsufficientCollateral` node error. Observed during
   manual testing; waiting for each tx to confirm before firing the next
   avoids it. A real fix is a per-request lock or wallet-level tx chaining.
+- Add auth in front of feedback triage and escrow settlement actions.
+  Both are currently open to anyone viewing the dashboard — fine for an
+  MVP with a handful of known testers, not once it has real traffic.
 
 ## Changelog
 
