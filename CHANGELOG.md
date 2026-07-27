@@ -14,6 +14,12 @@ dashboard + Render backend after this cycle's deploy — including
 confirming the redeploy actually picked up the latest code rather than
 serving a stale process.
 
+- **Synthetic load-test dataset extended to 70 wallets** (from Level 5's
+  50), matching Level 6's submission-checklist number for context. All
+  70 independently re-verified on-chain via `verify-synthetic-users.ts`.
+  Still explicitly *not* real users — see `docs/synthetic-users.md`.
+  Surfaced a transient Blockfrost indexing-lag false-negative in the
+  verify script (3/70 briefly unconfirmed, resolved within ~a minute).
 - **Deadline picker fix**: real feedback ("confusing on mobile") turned
   into a shipped change — +1/+3/+7/+14 day quick-select presets in
   `EscrowForm.tsx`, native `datetime-local` picker kept as a fallback.

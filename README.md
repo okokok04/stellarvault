@@ -62,13 +62,13 @@ triage lifecycle, and prioritization approach — including the first
 real feedback → action entry in its changelog table (a mobile-unfriendly
 deadline picker, fixed with quick-select presets in `EscrowForm.tsx`).
 
-Before recruiting real testers, the validator was exercised across 50
+Before recruiting real testers, the validator was exercised across 70
 independent, freshly generated Preprod wallets — each one funded and
-each one independently locking a real escrow on-chain. That's a
-load-test, explicitly **not** a claim of real users; see
+each one independently locking a real escrow on-chain, all 70
+independently re-verified against Blockfrost. That's a load-test,
+explicitly **not** a claim of real users; see
 [`docs/synthetic-users.md`](docs/synthetic-users.md) for exactly what
-it is and the actual outreach plan for getting real ones (Level 6's
-submission checklist asks for 70).
+it is and the actual outreach plan for getting real ones.
 
 ## How it works
 
