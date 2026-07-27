@@ -162,3 +162,15 @@ with a disk if you need the history to persist.
 - [x] Documentation updated to match the extended product (this file,
       `USAGE.md`, `ARCHITECTURE.md`, `CHANGELOG.md`).
 - [x] Confirm you have ≥ 20 meaningful commits since Level 4's submission.
+
+**Level 6 (Supermoon) — additive on top of Level 5:**
+
+- [x] Extend the MVP further, driven by real feedback (deadline-picker
+      mobile fix, escrow list filter/pagination, in-dashboard triage).
+- [ ] 70 **real** Preprod users with verifiable wallet addresses — same
+      caveat as Level 5: the synthetic load-test set does not count.
+      See [`docs/FEEDBACK.md`](FEEDBACK.md#getting-real-testers).
+- [x] Feedback loop documented, with a real feedback → action entry now
+      filled in — [`docs/FEEDBACK.md`](FEEDBACK.md).
+- [x] Documentation updated to match the extended product.
+- [x] Confirm you have ≥ 30 meaningful commits since Level 5's submission.
