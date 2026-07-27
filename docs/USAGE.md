@@ -88,6 +88,9 @@ curl -X PATCH http://localhost:4000/feedback/<id>/status \
 
 # export everything as CSV (contact still stripped)
 curl http://localhost:4000/feedback/export.csv -o feedback.csv
+
+# remove spam/abuse
+curl -X DELETE http://localhost:4000/feedback/<id>
 ```
 
 The same form is available directly on the dashboard, below the escrow
