@@ -30,11 +30,13 @@ const validPayload = {
 };
 
 describe("GET /health", () => {
-  it("reports ok", async () => {
+  it("reports ok with a version and non-negative uptime", async () => {
     const { app } = buildAppWithFakeOnchain();
     const res = await request(app).get("/health");
     expect(res.status).toBe(200);
     expect(res.body.status).toBe("ok");
+    expect(typeof res.body.version).toBe("string");
+    expect(res.body.uptimeSeconds).toBeGreaterThanOrEqual(0);
   });
 });
 

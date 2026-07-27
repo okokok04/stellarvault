@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { type Express } from "express";
+import packageJson from "../package.json" with { type: "json" };
 import type { FeedbackStore } from "./lib/feedbackStore.js";
 import type { EscrowStore } from "./lib/store.js";
 import { createEscrowRouter, type OnChainPort } from "./routes/escrow.js";
@@ -18,7 +19,12 @@ export function createApp(deps: {
   app.use(express.json());
 
   app.get("/health", (_req, res) => {
-    res.json({ status: "ok", service: "stellarvault-backend" });
+    res.json({
+      status: "ok",
+      service: "stellarvault-backend",
+      version: packageJson.version,
+      uptimeSeconds: Math.round(process.uptime()),
+    });
   });
 
   app.use("/escrows", createEscrowRouter(deps));
