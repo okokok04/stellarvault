@@ -88,8 +88,18 @@ curl -X PATCH http://localhost:4000/feedback/<id>/status \
 ```
 
 The same form is available directly on the dashboard, below the escrow
-list — see [`docs/FEEDBACK.md`](FEEDBACK.md) for how submissions get
-triaged and prioritized.
+list, and triage (`new → triaged → actioned/won't fix`) is a one-click
+button on each feedback card there too — the `curl` above still works
+identically if you'd rather script it. See
+[`docs/FEEDBACK.md`](FEEDBACK.md) for how submissions get triaged and
+prioritized.
+
+### Escrow list filtering
+
+The dashboard's escrow list has filter buttons
+(All/Locked/Released/Refunded/Resolved) and a "Show more" button that
+reveals 10 at a time — there's no equivalent filter on `GET /escrows`
+itself yet (it always returns everything); filtering happens client-side.
 
 ### Stats
 
