@@ -53,5 +53,11 @@ export const api = {
       body: JSON.stringify(input),
     }),
 
+  updateFeedbackStatus: (id: string, status: FeedbackRecord["status"]) =>
+    request<FeedbackRecord>(`/feedback/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+
   getStats: () => request<PlatformStats>("/stats"),
 };

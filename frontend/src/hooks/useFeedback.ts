@@ -29,5 +29,14 @@ export function useFeedback() {
     return created;
   }, []);
 
-  return { feedback, loading, error, refresh, submitFeedback };
+  const updateStatus = useCallback(
+    async (id: string, status: FeedbackRecord["status"]) => {
+      const updated = await api.updateFeedbackStatus(id, status);
+      setFeedback((prev) => prev.map((f) => (f.id === id ? updated : f)));
+      return updated;
+    },
+    [],
+  );
+
+  return { feedback, loading, error, refresh, submitFeedback, updateStatus };
 }
