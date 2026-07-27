@@ -21,6 +21,14 @@ const STATUS_BADGE_CLASS: Record<FeedbackStatus, string> = {
 /// See docs/FEEDBACK.md's roadmap note before this handles real volume.
 const NEXT_STATUSES: FeedbackStatus[] = ["triaged", "actioned", "wont_fix"];
 
+const STATUS_FILTERS: Array<{ label: string; value: FeedbackStatus | "all" }> = [
+  { label: "All", value: "all" },
+  { label: "New", value: "new" },
+  { label: "Triaged", value: "triaged" },
+  { label: "Actioned", value: "actioned" },
+  { label: "Won't fix", value: "wont_fix" },
+];
+
 export function FeedbackList({
   feedback,
   loading,
@@ -30,6 +38,8 @@ export function FeedbackList({
   loading: boolean;
   onUpdateStatus?: (id: string, status: FeedbackStatus) => Promise<unknown>;
 }) {
+  const [filter, setFilter] = useState<FeedbackStatus | "all">("all");
+
   if (loading) {
     return <p className="empty-state">Loading feedback…</p>;
   }
@@ -38,12 +48,34 @@ export function FeedbackList({
     return <p className="empty-state">No feedback yet — be the first.</p>;
   }
 
+  const newestFirst = [...feedback].reverse();
+  const filtered = filter === "all" ? newestFirst : newestFirst.filter((f) => f.status === filter);
+
   return (
-    <div className="escrow-list">
-      {[...feedback].reverse().map((item) => (
-        <FeedbackCard key={item.id} item={item} onUpdateStatus={onUpdateStatus} />
-      ))}
-    </div>
+    <>
+      <div className="escrow-filters">
+        {STATUS_FILTERS.map((f) => (
+          <button
+            key={f.value}
+            type="button"
+            className={filter === f.value ? "primary" : undefined}
+            onClick={() => setFilter(f.value)}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="empty-state">No feedback with that status.</p>
+      ) : (
+        <div className="escrow-list">
+          {filtered.map((item) => (
+            <FeedbackCard key={item.id} item={item} onUpdateStatus={onUpdateStatus} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 
