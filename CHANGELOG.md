@@ -6,6 +6,14 @@ it in the same commit/PR as the change it describes, not after.
 
 ## Unreleased / Level 6 — Supermoon
 
+**Verified end-to-end in production**, not just locally: deadline
+presets, the stats bar, escrow/feedback filter buttons, and feedback
+submission all confirmed working against the live GitHub Pages
+dashboard + Render backend after this cycle's deploy — including
+`GET /health` reporting the new `version`/`uptimeSeconds` fields,
+confirming the redeploy actually picked up the latest code rather than
+serving a stale process.
+
 - **Deadline picker fix**: real feedback ("confusing on mobile") turned
   into a shipped change — +1/+3/+7/+14 day quick-select presets in
   `EscrowForm.tsx`, native `datetime-local` picker kept as a fallback.
