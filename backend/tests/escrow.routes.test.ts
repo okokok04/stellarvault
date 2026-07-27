@@ -5,7 +5,7 @@ import { createFeedbackMemoryStore } from "../src/lib/feedbackStore.js";
 import { createMemoryStore } from "../src/lib/store.js";
 import type { OnChainPort } from "../src/routes/escrow.js";
 
-function buildAppWithFakeOnchain() {
+function buildAppWithFakeOnchain(escrowRateLimit?: { windowMs: number; max: number }) {
   const onchain: OnChainPort = {
     lockFunds: vi.fn().mockResolvedValue({
       lockTxHash: "fake-lock-tx",
@@ -17,7 +17,7 @@ function buildAppWithFakeOnchain() {
   };
   const store = createMemoryStore();
   const feedbackStore = createFeedbackMemoryStore();
-  const app = createApp({ store, onchain, feedbackStore });
+  const app = createApp({ store, onchain, feedbackStore, escrowRateLimit });
   return { app, onchain, store };
 }
 
@@ -57,6 +57,15 @@ describe("POST /escrows", () => {
     expect(res.body.status).toBe("locked");
     expect(res.body.lockTxHash).toBe("fake-lock-tx");
     expect(onchain.lockFunds).toHaveBeenCalledWith(validPayload);
+  });
+
+  it("rate-limits repeated creation attempts from the same client", async () => {
+    const { app } = buildAppWithFakeOnchain({ windowMs: 60_000, max: 1 });
+
+    await request(app).post("/escrows").send(validPayload);
+    const second = await request(app).post("/escrows").send(validPayload);
+
+    expect(second.status).toBe(429);
   });
 });
 

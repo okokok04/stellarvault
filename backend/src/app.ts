@@ -11,6 +11,7 @@ export function createApp(deps: {
   onchain: OnChainPort;
   feedbackStore: FeedbackStore;
   feedbackRateLimit?: { windowMs: number; max: number };
+  escrowRateLimit?: { windowMs: number; max: number };
 }): Express {
   const app = express();
   app.use(cors());
