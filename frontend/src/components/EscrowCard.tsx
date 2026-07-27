@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { EscrowRecord } from "../types/escrow";
+import { CopyButton } from "./CopyButton";
 import { StatusBadge } from "./StatusBadge";
 
 function shorten(value: string, head = 8, tail = 6): string {
@@ -94,15 +95,18 @@ export function EscrowCard({
       </div>
       <div className="escrow-meta">
         <span>
-          script <code className="hash">{shorten(escrow.scriptAddress)}</code>
+          script <code className="hash">{shorten(escrow.scriptAddress)}</code>{" "}
+          <CopyButton value={escrow.scriptAddress} />
         </span>
         <span>
-          lock tx <code className="hash">{shorten(escrow.lockTxHash)}</code>
+          lock tx <code className="hash">{shorten(escrow.lockTxHash)}</code>{" "}
+          <CopyButton value={escrow.lockTxHash} />
         </span>
         {escrow.settleTxHash && (
           <span>
             settle tx{" "}
-            <code className="hash">{shorten(escrow.settleTxHash)}</code>
+            <code className="hash">{shorten(escrow.settleTxHash)}</code>{" "}
+            <CopyButton value={escrow.settleTxHash} />
           </span>
         )}
       </div>
