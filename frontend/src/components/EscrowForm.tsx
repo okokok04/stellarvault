@@ -17,6 +17,26 @@ const EMPTY_FORM: FormState = {
   deadline: "",
 };
 
+const DEADLINE_PRESETS = [
+  { label: "+1 day", days: 1 },
+  { label: "+3 days", days: 3 },
+  { label: "+7 days", days: 7 },
+  { label: "+14 days", days: 14 },
+];
+
+/// `datetime-local` inputs are the biggest source of mobile confusion in
+/// this form (per real feedback) — native pickers vary wildly across
+/// mobile browsers/OSes and are fiddly to tap precisely. Quick-select
+/// presets cover the common case without touching the picker at all;
+/// it stays available for anyone who wants an exact time.
+function toDatetimeLocalValue(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+    `T${pad(date.getHours())}:${pad(date.getMinutes())}`
+  );
+}
+
 export function EscrowForm({
   onCreate,
   defaultBuyerAddress,
@@ -120,6 +140,24 @@ export function EscrowForm({
         </div>
         <div className="field-full">
           <label htmlFor="deadline">Refund deadline</label>
+          <div className="deadline-presets">
+            {DEADLINE_PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                type="button"
+                onClick={() =>
+                  update(
+                    "deadline",
+                    toDatetimeLocalValue(
+                      new Date(Date.now() + preset.days * 86_400_000),
+                    ),
+                  )
+                }
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
           <input
             id="deadline"
             type="datetime-local"

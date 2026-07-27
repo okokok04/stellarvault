@@ -45,4 +45,31 @@ describe("EscrowForm", () => {
     expect(input.buyerAddress).toBe("addr_test1buyer");
     expect(input.milestoneAmountLovelace).toBe(25_000_000);
   });
+
+  it("fills the deadline from a quick-select preset instead of the raw picker", async () => {
+    const onCreate = vi.fn().mockResolvedValue(undefined);
+    render(<EscrowForm onCreate={onCreate} />);
+
+    fireEvent.change(screen.getByLabelText("Buyer address"), {
+      target: { value: "addr_test1buyer" },
+    });
+    fireEvent.change(screen.getByLabelText("Seller address"), {
+      target: { value: "addr_test1seller" },
+    });
+    fireEvent.change(screen.getByLabelText("Arbiter address"), {
+      target: { value: "addr_test1arbiter" },
+    });
+    fireEvent.change(screen.getByLabelText("Milestone amount (ADA)"), {
+      target: { value: "10" },
+    });
+
+    fireEvent.click(screen.getByText("+7 days"));
+    fireEvent.click(screen.getByText("Lock funds in escrow"));
+
+    await vi.waitFor(() => expect(onCreate).toHaveBeenCalledTimes(1));
+    const [input] = onCreate.mock.calls[0];
+    const daysAhead = (input.deadlineUnixMs - Date.now()) / 86_400_000;
+    expect(daysAhead).toBeGreaterThan(6.9);
+    expect(daysAhead).toBeLessThan(7.1);
+  });
 });
