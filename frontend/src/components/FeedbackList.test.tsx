@@ -54,4 +54,14 @@ describe("FeedbackList", () => {
     expect(screen.queryByText("First one")).not.toBeInTheDocument();
     expect(screen.getByText("Second one")).toBeInTheDocument();
   });
+
+  it("calls onRemove when Delete is clicked", async () => {
+    const onRemove = vi.fn().mockResolvedValue(undefined);
+    render(
+      <FeedbackList feedback={[makeFeedback()]} loading={false} onRemove={onRemove} />,
+    );
+
+    fireEvent.click(screen.getByText("Delete"));
+    await vi.waitFor(() => expect(onRemove).toHaveBeenCalledWith("f1"));
+  });
 });

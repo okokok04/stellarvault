@@ -33,10 +33,12 @@ export function FeedbackList({
   feedback,
   loading,
   onUpdateStatus,
+  onRemove,
 }: {
   feedback: FeedbackRecord[];
   loading: boolean;
   onUpdateStatus?: (id: string, status: FeedbackStatus) => Promise<unknown>;
+  onRemove?: (id: string) => Promise<unknown>;
 }) {
   const [filter, setFilter] = useState<FeedbackStatus | "all">("all");
 
@@ -71,7 +73,12 @@ export function FeedbackList({
       ) : (
         <div className="escrow-list">
           {filtered.map((item) => (
-            <FeedbackCard key={item.id} item={item} onUpdateStatus={onUpdateStatus} />
+            <FeedbackCard
+              key={item.id}
+              item={item}
+              onUpdateStatus={onUpdateStatus}
+              onRemove={onRemove}
+            />
           ))}
         </div>
       )}
@@ -82,9 +89,11 @@ export function FeedbackList({
 function FeedbackCard({
   item,
   onUpdateStatus,
+  onRemove,
 }: {
   item: FeedbackRecord;
   onUpdateStatus?: (id: string, status: FeedbackStatus) => Promise<unknown>;
+  onRemove?: (id: string) => Promise<unknown>;
 }) {
   const [busy, setBusy] = useState(false);
 
@@ -93,6 +102,16 @@ function FeedbackCard({
     setBusy(true);
     try {
       await onUpdateStatus(item.id, status);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function remove() {
+    if (!onRemove) return;
+    setBusy(true);
+    try {
+      await onRemove(item.id);
     } finally {
       setBusy(false);
     }
@@ -117,18 +136,24 @@ function FeedbackCard({
         {item.walletAddress && <span>from {item.walletAddress.slice(0, 16)}…</span>}
       </div>
 
-      {onUpdateStatus && (
+      {(onUpdateStatus || onRemove) && (
         <div className="actions" style={{ marginTop: "0.6rem" }}>
-          {NEXT_STATUSES.filter((status) => status !== item.status).map((status) => (
-            <button
-              key={status}
-              type="button"
-              disabled={busy}
-              onClick={() => transition(status)}
-            >
-              Mark {STATUS_LABEL[status].toLowerCase()}
+          {onUpdateStatus &&
+            NEXT_STATUSES.filter((status) => status !== item.status).map((status) => (
+              <button
+                key={status}
+                type="button"
+                disabled={busy}
+                onClick={() => transition(status)}
+              >
+                Mark {STATUS_LABEL[status].toLowerCase()}
+              </button>
+            ))}
+          {onRemove && (
+            <button type="button" className="danger" disabled={busy} onClick={remove}>
+              Delete
             </button>
-          ))}
+          )}
         </div>
       )}
     </div>

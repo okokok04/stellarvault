@@ -25,6 +25,7 @@ export function App() {
     loading: feedbackLoading,
     submitFeedback,
     updateStatus,
+    removeFeedback,
   } = useFeedback();
   const { stats, loading: statsLoading } = useStats();
 
@@ -72,6 +73,7 @@ export function App() {
           feedback={feedback}
           loading={feedbackLoading}
           onUpdateStatus={updateStatus}
+          onRemove={removeFeedback}
         />
       </section>
     </>
